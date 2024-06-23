@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rideshare/pages/available_car_list.dart';
+import 'package:rideshare/pages/car_details.dart';
 import 'package:rideshare/pages/complete_your_profile.dart';
 import 'package:rideshare/pages/enable_location.dart';
-import 'package:rideshare/pages/home_screen_transport.dart';
 import 'package:rideshare/pages/onboarding1.dart';
 import 'package:rideshare/pages/onboarding2.dart';
 import 'package:rideshare/pages/onboarding3.dart';
+import 'package:rideshare/pages/select_avilable_car.dart';
+import 'package:rideshare/pages/select_transport.dart';
 import 'package:rideshare/pages/setpassword.dart';
 import 'package:rideshare/pages/signup.dart';
 import 'package:rideshare/pages/welcome_screen.dart';
@@ -53,8 +56,15 @@ class MyApp extends StatelessWidget {
         GoRoute(path: "/SetPassword", builder: ((context, state) =>  SetPassword())),
         GoRoute(path: "/SetPassword", builder: ((context, state) =>  CompleteYourProfile())),
         GoRoute(path: "/CompleteYourProfile", builder: ((context, state) =>  CompleteYourProfile())),
-        GoRoute(path: "/CompleteYourProfile", builder: ((context, state) =>  HomeScreenTransport())),
-        GoRoute(path: "/HomeScreenTransport", builder: ((context, state) =>  HomeScreenTransport())),
+        GoRoute(path: "/CompleteYourProfile", builder: ((context, state) =>  SelectTranstport())),
+        GoRoute(path: "/SelectTranstport", builder: ((context, state) =>  SelectTranstport())),
+        GoRoute(path: "/SelectTranstport", builder: ((context, state) =>  SelectAvailableCar())),
+        GoRoute(path: "/SelectAvailableCar", builder: ((context, state) =>  SelectAvailableCar())),
+        GoRoute(path: "/SelectAvailableCar", builder: ((context, state) =>  AvailableCarList())),
+        GoRoute(path: "/AvailableCarList", builder: ((context, state) =>  AvailableCarList())),
+        GoRoute(path: "/AvailableCarList", builder: ((context, state) =>  CarDetails())),
+        GoRoute(path: "/CarDetails", builder: ((context, state) =>  CarDetails())),
+        
 
 
 

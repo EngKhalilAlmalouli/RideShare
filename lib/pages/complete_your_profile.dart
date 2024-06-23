@@ -146,40 +146,42 @@ class _CompleteYourProfileState extends State<CompleteYourProfile> {
 
                 SizedBox(height: 20,),
 
-       Row(
-        children: [
-          
-         SizedBox(width: 20,),
-
-        ElevatedButton(
-          onPressed: (){},
-         child:  Text('Cancel',
-         style:  TextStyle(
-          fontSize:16 ,
-          fontWeight: FontWeight.w500,
-          color: Color(0XFF008955),
-         ),
-         ),
-         style: ElevatedButton.styleFrom(backgroundColor: Colors.white, minimumSize: Size(174, 54)),
-         ),
-
-         SizedBox(width: 20,),
-
+       Center(
+         child: Row(
+          children: [
+            
+           SizedBox(width: 20,),
+         
           ElevatedButton(
-          onPressed: (){
-        context.go('/HomeScreenTransport');
-
-          },
-         child:  Text('Save',
-         style:  TextStyle(
-          fontSize:16 ,
-          fontWeight: FontWeight.w500,
-          color: Colors.white,
+            onPressed: (){},
+           child:  Text('Cancel',
+           style:  TextStyle(
+            fontSize:16 ,
+            fontWeight: FontWeight.w500,
+            color: Color(0XFF008955),
+           ),
+           ),
+           style: ElevatedButton.styleFrom(backgroundColor: Colors.white, minimumSize: Size(174, 54)),
+           ),
+         
+           SizedBox(width: 20,),
+         
+            ElevatedButton(
+            onPressed: (){
+          context.go('/SelectTranstport');
+         
+            },
+           child:  Text('Save',
+           style:  TextStyle(
+            fontSize:16 ,
+            fontWeight: FontWeight.w500,
+            color: Colors.white,
+           ),
+           ),
+           style: ElevatedButton.styleFrom(backgroundColor: Color(0XFF008955), minimumSize: Size(174, 54)),
+           ),
+          ],
          ),
-         ),
-         style: ElevatedButton.styleFrom(backgroundColor: Color(0XFF008955), minimumSize: Size(174, 54)),
-         ),
-        ],
        ),
 
          
