@@ -78,11 +78,11 @@ class EnableLocation extends StatelessWidget {
 
          },
          backgroundColor: const Color(0XFF08B783),
-         child: const Icon(Icons.arrow_right_alt_rounded),
          
          shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(100)
         ),
+         child: const Icon(Icons.arrow_right_alt_rounded),
          ),
     );
   }

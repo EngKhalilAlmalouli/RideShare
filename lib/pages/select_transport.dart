@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class SelectTranstport extends StatelessWidget {
   const SelectTranstport({super.key});
@@ -8,35 +7,56 @@ class SelectTranstport extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: (){},
-           icon: const Row(
-          children: [
-            Icon(Icons.arrow_back),
-            Text('Back'),
-          ],
+        leading: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: const FittedBox(
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 8,
+                ),
+                Icon(Icons.arrow_back_ios_new_outlined),
+                SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  'Back',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
+          ),
         ),
-           ),
-           title: const Center(
-             child: Text('Select transport',
-             style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-             ),),
-           ),
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        title: const Text(
+          'Select transport',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+            color: Color(0xFF2A2A2A),
+          ),
+        ),
       ),
       body: Center(
         child: Column(
           children: [
-           const SizedBox(height: 40,),
-          const  Text("Select your transport",
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.w600,
+            const SizedBox(
+              height: 40,
             ),
+            const Text(
+              "Select your transport",
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFF5A5A5A),
+              ),
             ),
-            SizedBox(height: 40,),
-
+            const SizedBox(
+              height: 40,
+            ),
             Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -44,88 +64,93 @@ class SelectTranstport extends StatelessWidget {
                   Container(
                     height: 160,
                     width: 160,
-                    color: Color(0XFFE2F5ED),
+                    color: const Color(0XFFE2F5ED),
                     child: Column(
                       children: [
-                        SizedBox(height: 30,),
-                        Image.asset("assets/iamges/car.png"),
-                        SizedBox(height: 10,),
-                        Text("Car"),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        Image.asset("assets/car.png"),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const Text("Car"),
                       ],
                     ),
                   ),
-                  SizedBox(width: 10,),
-              
-              
+                  const SizedBox(
+                    width: 10,
+                  ),
                   Container(
                     height: 160,
                     width: 160,
-                    color: Color(0XFFE2F5ED),
+                    color: const Color(0XFFE2F5ED),
                     child: Column(
                       children: [
-                        SizedBox(height: 30,),
-                        Image.asset("assets/iamges/bike.png"),
-                        SizedBox(height: 10,),
-                        Text("Bike"),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        Image.asset("assets/bike.png"),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const Text("Bike"),
                       ],
                     ),
                   ),
                 ],
               ),
             ),
-           const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             Center(
               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
                     height: 160,
                     width: 160,
-                    color: Color(0XFFE2F5ED),
+                    color: const Color(0XFFE2F5ED),
                     child: Column(
                       children: [
-                        SizedBox(height: 30,),
-                        Image.asset("assets/iamges/cycle.png"),
-                        SizedBox(height: 10,),
-                        Text("Cycle"),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        Image.asset("assets/cycle.png"),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const Text("Cycle"),
                       ],
                     ),
                   ),
-                  SizedBox(width: 10,),
-              
-              
+                  const SizedBox(
+                    width: 10,
+                  ),
                   Container(
                     height: 160,
                     width: 160,
-                    color: Color(0XFFE2F5ED),
+                    color: const Color(0XFFE2F5ED),
                     child: Column(
                       children: [
-                        SizedBox(height: 30,),
-                        Image.asset("assets/iamges/taxi.png"),
-                        SizedBox(height: 10,),
-                        Text("Taxi"),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        Image.asset("assets/taxi.png"),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const Text("Taxi"),
                       ],
                     ),
                   ),
                 ],
               ),
             ),
-
-
-            SizedBox(height: 50,),
-            FloatingActionButton(onPressed: (){
-              context.go('/SelectAvailableCar');
-        
-           },
-           backgroundColor: const Color(0XFF08B783),
-           child: const Text('Go'),
-           
-           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(100)
-          ),
-           )
-        
+            const SizedBox(
+              height: 50,
+            ),
           ],
         ),
       ),
