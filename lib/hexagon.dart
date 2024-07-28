@@ -51,13 +51,6 @@ class HexagonPainter extends CustomPainter {
         path.moveTo(point.dx, point.dy);
       }
 
-      double controlX1 = radius + radius * math.cos(angle * i + angle / 2);
-      double controlY1 = radius + radius * math.sin(angle * i + angle / 2);
-      double controlX2 =
-          radius + radius * math.cos(angle * (i + 1) + angle / 2);
-      double controlY2 =
-          radius + radius * math.sin(angle * (i + 1) + angle / 2);
-
       path.arcToPoint(
         nextPoint,
         radius: Radius.circular(borderRadius),

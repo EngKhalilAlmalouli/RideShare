@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rideshare/colors.dart';
 
 class SelectAvailableCar extends StatelessWidget {
   const SelectAvailableCar({super.key});
@@ -50,7 +51,7 @@ class SelectAvailableCar extends StatelessWidget {
               child: Container(
                 height: 170,
                 width: 362,
-                color: const Color(0xffE2F5ED),
+                color: AppColors.lightGreen,
                 child: Column(
                   children: [
                     const Row(
@@ -109,7 +110,7 @@ class SelectAvailableCar extends StatelessWidget {
                         context.go('/AvailableCarList');
                       },
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xffE2F5ED),
+                          backgroundColor: AppColors.lightGreen,
                           minimumSize: const Size(340, 54)),
                       child: const Text(
                         'View car list',
@@ -131,7 +132,7 @@ class SelectAvailableCar extends StatelessWidget {
               child: Container(
                 height: 170,
                 width: 362,
-                color: const Color(0xffE2F5ED),
+                color: AppColors.lightGreen,
                 child: Column(
                   children: [
                     const Row(
@@ -188,7 +189,7 @@ class SelectAvailableCar extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xffE2F5ED),
+                          backgroundColor: AppColors.lightGreen,
                           minimumSize: const Size(340, 54)),
                       child: const Text(
                         'View car list',
@@ -210,7 +211,7 @@ class SelectAvailableCar extends StatelessWidget {
               child: Container(
                 height: 170,
                 width: 362,
-                color: const Color(0xffE2F5ED),
+                color: AppColors.lightGreen,
                 child: Column(
                   children: [
                     const Row(
@@ -267,7 +268,7 @@ class SelectAvailableCar extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xffE2F5ED),
+                          backgroundColor: AppColors.lightGreen,
                           minimumSize: const Size(340, 54)),
                       child: const Text(
                         'View car list',
@@ -289,7 +290,7 @@ class SelectAvailableCar extends StatelessWidget {
               child: Container(
                 height: 170,
                 width: 362,
-                color: const Color(0xffE2F5ED),
+                color: AppColors.lightGreen,
                 child: Column(
                   children: [
                     const Row(
@@ -346,7 +347,7 @@ class SelectAvailableCar extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xffE2F5ED),
+                          backgroundColor: AppColors.lightGreen,
                           minimumSize: const Size(340, 54)),
                       child: const Text(
                         'View car list',

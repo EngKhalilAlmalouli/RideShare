@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rideshare/colors.dart';
 
 class SelectTransport extends StatelessWidget {
   const SelectTransport({super.key});
@@ -64,7 +65,7 @@ class SelectTransport extends StatelessWidget {
                   Container(
                     height: 160,
                     width: 160,
-                    color: const Color(0XFFE2F5ED),
+                    color: AppColors.lightGreen,
                     child: Column(
                       children: [
                         const SizedBox(
@@ -84,7 +85,7 @@ class SelectTransport extends StatelessWidget {
                   Container(
                     height: 160,
                     width: 160,
-                    color: const Color(0XFFE2F5ED),
+                    color: AppColors.lightGreen,
                     child: Column(
                       children: [
                         const SizedBox(
@@ -111,7 +112,7 @@ class SelectTransport extends StatelessWidget {
                   Container(
                     height: 160,
                     width: 160,
-                    color: const Color(0XFFE2F5ED),
+                    color: AppColors.lightGreen,
                     child: Column(
                       children: [
                         const SizedBox(
@@ -131,7 +132,7 @@ class SelectTransport extends StatelessWidget {
                   Container(
                     height: 160,
                     width: 160,
-                    color: const Color(0XFFE2F5ED),
+                    color: AppColors.lightGreen,
                     child: Column(
                       children: [
                         const SizedBox(

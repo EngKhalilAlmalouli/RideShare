@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rideshare/colors.dart';
 
 class CarDetails extends StatelessWidget {
   const CarDetails({super.key});
@@ -78,7 +79,7 @@ class CarDetails extends StatelessWidget {
                   Container(
                     width: 77,
                     height: 75,
-                    color: const Color(0xffE2F5ED),
+                    color: AppColors.lightGreen,
                     child: Column(
                       children: [
                         const SizedBox(
@@ -114,7 +115,7 @@ class CarDetails extends StatelessWidget {
                   Container(
                     width: 77,
                     height: 75,
-                    color: const Color(0xffE2F5ED),
+                    color: AppColors.lightGreen,
                     child: Column(
                       children: [
                         const SizedBox(
@@ -150,7 +151,7 @@ class CarDetails extends StatelessWidget {
                   Container(
                     width: 77,
                     height: 75,
-                    color: const Color(0xffE2F5ED),
+                    color: AppColors.lightGreen,
                     child: Column(
                       children: [
                         const SizedBox(
@@ -186,7 +187,7 @@ class CarDetails extends StatelessWidget {
                   Container(
                     width: 77,
                     height: 75,
-                    color: const Color(0xffE2F5ED),
+                    color: AppColors.lightGreen,
                     child: Column(
                       children: [
                         const SizedBox(
@@ -234,7 +235,7 @@ class CarDetails extends StatelessWidget {
               Container(
                 width: 362,
                 height: 44,
-                color: const Color(0xffE2F5ED),
+                color: AppColors.lightGreen,
                 child: const ListTile(
                   leading: Text(
                     "Model",
@@ -258,7 +259,7 @@ class CarDetails extends StatelessWidget {
               Container(
                 width: 362,
                 height: 44,
-                color: const Color(0xffE2F5ED),
+                color: AppColors.lightGreen,
                 child: const ListTile(
                   leading: Text(
                     "Capacity",
@@ -282,7 +283,7 @@ class CarDetails extends StatelessWidget {
               Container(
                 width: 362,
                 height: 44,
-                color: const Color(0xffE2F5ED),
+                color: AppColors.lightGreen,
                 child: const ListTile(
                   leading: Text(
                     "Color",
@@ -306,7 +307,7 @@ class CarDetails extends StatelessWidget {
               Container(
                 width: 362,
                 height: 44,
-                color: const Color(0xffE2F5ED),
+                color: AppColors.lightGreen,
                 child: const ListTile(
                   leading: Text(
                     "Fuel type",
@@ -330,7 +331,7 @@ class CarDetails extends StatelessWidget {
               Container(
                 width: 362,
                 height: 44,
-                color: const Color(0xffE2F5ED),
+                color: AppColors.lightGreen,
                 child: const ListTile(
                   leading: Text(
                     "Gear type",

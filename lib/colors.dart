@@ -9,6 +9,8 @@ abstract class AppColors {
 
   static Color greenIcon = const Color(0xFF08B783);
 
+  static Color lightGreen100 = const Color(0xFF8AD4B5);
+
   static Color lightGreen = const Color(0xFFE2F5ED);
 
   static Color lightGrey = const Color.fromARGB(255, 163, 163, 163);

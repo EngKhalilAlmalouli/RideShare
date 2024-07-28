@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rideshare/colors.dart';
 
 class AvailableCarList extends StatelessWidget {
   const AvailableCarList({super.key});
@@ -49,7 +50,7 @@ class AvailableCarList extends StatelessWidget {
             child: Container(
               height: 170,
               width: 362,
-              color: const Color(0xffE2F5ED),
+              color: AppColors.lightGreen,
               child: Column(
                 children: [
                   const Row(
@@ -113,7 +114,7 @@ class AvailableCarList extends StatelessWidget {
                           context.go('/CarDetails');
                         },
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xffE2F5ED),
+                            backgroundColor: AppColors.lightGreen,
                             minimumSize: const Size(165, 54)),
                         child: const Text(
                           'Book later',
