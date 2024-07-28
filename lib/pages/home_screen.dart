@@ -32,7 +32,12 @@ class _HomeScreenState extends State<HomeScreen> {
       alignment: Alignment.center,
       children: [
         _selectedWidget,
-        Positioned(bottom: 0, child: SvgPicture.asset('assets/bar.svg')),
+        Positioned(
+            bottom: 0,
+            child: SvgPicture.asset(
+              'assets/bar.svg',
+              width: MediaQuery.of(context).size.width,
+            )),
         Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
@@ -186,14 +191,6 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Stack(
             alignment: Alignment.center,
             children: [
-              // RotatedBox(
-              //   quarterTurns: 1,
-              //   child: HexagonWidget(
-              //     size: 100.0, // Adjust size as needed
-              //     color: AppColors.greenIcon,
-              //     borderRadius: 0,
-              //   ),
-              // ),
               InkWell(
                   onTap: () => onPressed(5),
                   child: Image(
