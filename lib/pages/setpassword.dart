@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:rideshare/bloc/sign_up_bloc.dart';
 import 'package:rideshare/model/sign_up_model.dart';
 import 'package:rideshare/pages/select_transport.dart';
-import 'package:rideshare/service/sign_up_service.dart';
 import 'package:rideshare/text_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -164,22 +163,71 @@ class _SetPasswordState extends State<SetPassword> {
                         if (state is Success) {
                           return Center(
                             child: Container(
-                              child: Text('Success'),
-                              decoration: BoxDecoration(color: Colors.green),
+                              decoration:
+                                  const BoxDecoration(color: Colors.green),
+                              child: const Text('Success'),
                             ),
                           );
                         }
                         if (state is Error) {
                           return Center(
-                            child: Text(state.message),
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  width: 340,
+                                  height: 54,
+                                  child: Button(
+                                    text: 'Register',
+                                    onPressed: () {
+                                      context.read<SignUpBloc>().add(SignUpUser(
+                                          user: SignUpModel(
+                                              firstName: widget.firstName,
+                                              lastName: widget.lastName,
+                                              phone: widget.phone,
+                                              username: widget.username,
+                                              birthDate: widget.birthDate,
+                                              password: password.text,
+                                              confirmPassword:
+                                                  conPassword.text)));
+                                    },
+                                  ),
+                                ),
+                                Text(state.message),
+                              ],
+                            ),
                           );
                         }
                         if (state is Exception) {
                           return Center(
-                            child: Text(state.message),
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  width: 340,
+                                  height: 54,
+                                  child: Button(
+                                    text: 'Register',
+                                    onPressed: () {
+                                      context.read<SignUpBloc>().add(SignUpUser(
+                                          user: SignUpModel(
+                                              firstName: widget.firstName,
+                                              lastName: widget.lastName,
+                                              phone: widget.phone,
+                                              username: widget.username,
+                                              birthDate: widget.birthDate,
+                                              password: password.text,
+                                              confirmPassword:
+                                                  conPassword.text)));
+                                    },
+                                  ),
+                                ),
+                                Text(state.message),
+                              ],
+                            ),
                           );
                         } else {
-                          return Center(child: CircularProgressIndicator());
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
                         }
                       },
                       listener: (BuildContext context, SignUpState state) {
@@ -187,7 +235,8 @@ class _SetPasswordState extends State<SetPassword> {
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SelectTranstport()));
+                                  builder: (context) =>
+                                      const SelectTransport()));
                         }
                       },
                     ),
@@ -220,6 +269,27 @@ class _SetPasswordState extends State<SetPassword> {
           ? const Icon(Icons.visibility_outlined)
           : const Icon(Icons.visibility_off_outlined),
       color: Colors.grey,
+    );
+  }
+
+  Widget regester() {
+    return SizedBox(
+      width: 340,
+      height: 54,
+      child: Button(
+        text: 'Register',
+        onPressed: () {
+          context.read<SignUpBloc>().add(SignUpUser(
+              user: SignUpModel(
+                  firstName: widget.firstName,
+                  lastName: widget.lastName,
+                  phone: widget.phone,
+                  username: widget.username,
+                  birthDate: widget.birthDate,
+                  password: password.text,
+                  confirmPassword: conPassword.text)));
+        },
+      ),
     );
   }
 }

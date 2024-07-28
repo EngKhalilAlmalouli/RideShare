@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class SelectTranstport extends StatelessWidget {
-  const SelectTranstport({super.key});
+class SelectTransport extends StatelessWidget {
+  const SelectTransport({super.key});
 
   @override
   Widget build(BuildContext context) {

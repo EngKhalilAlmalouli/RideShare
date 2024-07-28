@@ -4,11 +4,12 @@ import 'package:rideshare/pages/available_car_list.dart';
 import 'package:rideshare/pages/car_details.dart';
 import 'package:rideshare/pages/complete_your_profile.dart';
 import 'package:rideshare/pages/enable_location.dart';
+import 'package:rideshare/pages/home_screen.dart';
+import 'package:rideshare/pages/home_screen_transport.dart';
 import 'package:rideshare/pages/map.dart';
 import 'package:rideshare/pages/onBoarding_page.dart';
 import 'package:rideshare/pages/select_avilable_car.dart';
 import 'package:rideshare/pages/select_transport.dart';
-import 'package:rideshare/pages/setpassword.dart';
 import 'package:rideshare/pages/sign_up_page.dart';
 import 'package:rideshare/pages/signup.dart';
 import 'package:rideshare/pages/welcome_screen.dart';
@@ -61,7 +62,7 @@ class MyApp extends StatelessWidget {
         //     username: 'sdjhfgk',
         //     phone: '0937254836',
         //     birthDate: '2001-06-15'),
-        body: SignUpPage(),
+        body: HomeScreen(),
       ),
     );
   }
@@ -140,10 +141,10 @@ final GoRouter _router = GoRouter(
           builder: ((context, state) => const CompleteYourProfile())),
       GoRoute(
           path: "/CompleteYourProfile",
-          builder: ((context, state) => const SelectTranstport())),
+          builder: ((context, state) => const SelectTransport())),
       GoRoute(
           path: "/SelectTranstport",
-          builder: ((context, state) => const SelectTranstport())),
+          builder: ((context, state) => const SelectTransport())),
       GoRoute(
           path: "/SelectTranstport",
           builder: ((context, state) => const SelectAvailableCar())),
