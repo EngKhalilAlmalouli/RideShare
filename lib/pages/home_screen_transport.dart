@@ -312,7 +312,8 @@ class _HomeScreenTransportState extends State<HomeScreenTransport> {
                                 ),
                               ),
                               Positioned(
-                                left: selectText ? 0 : 162,
+                                left: selectText ? 0 : null,
+                                right: selectText ? null : 0,
                                 child: Container(
                                   alignment: Alignment.center,
                                   height: 48,

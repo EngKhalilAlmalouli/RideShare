@@ -106,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     SizedBox(
                       width: 60,
-                      height: 25,
+                      height: 23,
                     ),
                     Text(
                       'Wallet',
