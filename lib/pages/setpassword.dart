@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:rideshare/bloc/sign_up_bloc.dart';
 import 'package:rideshare/model/sign_up_model.dart';
 import 'package:rideshare/pages/select_transport.dart';
@@ -15,13 +14,13 @@ class SetPassword extends StatefulWidget {
   final String birthDate;
 
   const SetPassword({
-    Key? key,
+    super.key,
     required this.firstName,
     required this.lastName,
     required this.username,
     required this.phone,
     required this.birthDate,
-  }) : super(key: key);
+  });
 
   @override
   State<SetPassword> createState() => _SetPasswordState();

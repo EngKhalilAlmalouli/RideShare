@@ -59,8 +59,10 @@ void showMyDialog(BuildContext context) {
                 text: 'Skip for now',
                 onPressed: () {
                   Navigator.of(context).pop();
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const LoginPage()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AuthPage()));
                 },
               ),
             ),

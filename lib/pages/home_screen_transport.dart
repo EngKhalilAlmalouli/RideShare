@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:rideshare/colors.dart';
+import 'package:rideshare/pages/notifecation.dart';
 import 'package:rideshare/text_button.dart';
 
 class HomeScreenTransport extends StatefulWidget {
@@ -70,16 +71,16 @@ class _HomeScreenTransportState extends State<HomeScreenTransport> {
       () {
         _markers.add(
           Marker(
-            markerId: MarkerId('currentLocation'),
+            markerId: const MarkerId('currentLocation'),
             position:
                 LatLng(_currentPosition!.latitude, _currentPosition!.longitude),
-            infoWindow: InfoWindow(title: 'My Location'),
+            infoWindow: const InfoWindow(title: 'My Location'),
             icon: markerIcon ?? BitmapDescriptor.defaultMarkerWithHue(1),
           ),
         );
         _circles.add(
           Circle(
-            circleId: CircleId('0'),
+            circleId: const CircleId('0'),
             center:
                 LatLng(_currentPosition!.latitude, _currentPosition!.longitude),
             radius: 25,
@@ -89,7 +90,7 @@ class _HomeScreenTransportState extends State<HomeScreenTransport> {
         );
         _circles.add(
           Circle(
-            circleId: CircleId('1'),
+            circleId: const CircleId('1'),
             center:
                 LatLng(_currentPosition!.latitude, _currentPosition!.longitude),
             radius: 20,
@@ -99,7 +100,7 @@ class _HomeScreenTransportState extends State<HomeScreenTransport> {
         );
         _circles.add(
           Circle(
-            circleId: CircleId('2'),
+            circleId: const CircleId('2'),
             center:
                 LatLng(_currentPosition!.latitude, _currentPosition!.longitude),
             radius: 12,
@@ -109,7 +110,7 @@ class _HomeScreenTransportState extends State<HomeScreenTransport> {
         );
         _circles.add(
           Circle(
-            circleId: CircleId('3'),
+            circleId: const CircleId('3'),
             center:
                 LatLng(_currentPosition!.latitude, _currentPosition!.longitude),
             radius: 5,
@@ -168,7 +169,13 @@ class _HomeScreenTransportState extends State<HomeScreenTransport> {
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const NotifecationPage()));
+                      },
                       icon: const Icon(Icons.notifications_outlined),
                     ),
                   ),
@@ -199,7 +206,7 @@ class _HomeScreenTransportState extends State<HomeScreenTransport> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   SizedBox(
@@ -254,7 +261,7 @@ class _HomeScreenTransportState extends State<HomeScreenTransport> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 9,
                           ),
                           Stack(
@@ -324,7 +331,7 @@ class _HomeScreenTransportState extends State<HomeScreenTransport> {
                                   ),
                                   child: Text(
                                     selectText ? 'Transport' : 'Delivery',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 16,
                                       fontWeight: FontWeight.w500,

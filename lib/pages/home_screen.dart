@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:rideshare/colors.dart';
-import 'package:rideshare/hexagon.dart';
 import 'package:rideshare/pages/favourite.dart';
 import 'package:rideshare/pages/home_screen_transport.dart';
 import 'package:rideshare/pages/offer.dart';
@@ -104,14 +103,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       width: 60,
                       height: 23,
                     ),
                     Text(
                       'Wallet',
                       style: TextStyle(
-                          color: _selectedIndex == 5
+                          color: _selectedIndex == 4
                               ? AppColors.greenIcon
                               : AppColors.darkGrey,
                           fontSize: 12,
@@ -131,10 +130,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           height: 23,
                           child: Image(
                             image: _selectedIndex == 2
-                                ? AssetImage(
+                                ? const AssetImage(
                                     "assets/Subtract.png",
                                   )
-                                : AssetImage(
+                                : const AssetImage(
                                     "assets/Vector-2.png",
                                   ),
                             width: 20,
@@ -192,13 +191,13 @@ class _HomeScreenState extends State<HomeScreen> {
             alignment: Alignment.center,
             children: [
               InkWell(
-                  onTap: () => onPressed(5),
+                  onTap: () => onPressed(4),
                   child: Image(
-                    image: _selectedIndex == 5
-                        ? AssetImage(
+                    image: _selectedIndex == 4
+                        ? const AssetImage(
                             "assets/Subtract-2.png",
                           )
-                        : AssetImage(
+                        : const AssetImage(
                             "assets/Vector.png",
                           ),
                     width: 28,
@@ -227,13 +226,11 @@ class _HomeScreenState extends State<HomeScreen> {
       } else if (index == 1) {
         _selectedWidget = const Favourite();
       } else if (index == 2) {
-        _selectedWidget = const Wallet();
-      } else if (index == 3) {
         _selectedWidget = const Offer();
+      } else if (index == 3) {
+        _selectedWidget = const Profile();
       } else if (index == 4) {
-        _selectedWidget = const Profile();
-      } else if (index == 5) {
-        _selectedWidget = const Profile();
+        _selectedWidget = const Wallet();
       }
     });
   }

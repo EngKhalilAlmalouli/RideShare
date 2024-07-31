@@ -7,11 +7,11 @@ class HexagonWidget extends StatelessWidget {
   final double borderRadius;
 
   const HexagonWidget({
-    Key? key,
+    super.key,
     required this.size,
     required this.color,
     required this.borderRadius,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

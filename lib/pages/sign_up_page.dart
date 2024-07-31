@@ -236,15 +236,15 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   Future<void> _selectDate() async {
-    DateTime? _picker = await showDatePicker(
+    DateTime? picker = await showDatePicker(
       context: context,
       firstDate: DateTime(1960),
       lastDate: DateTime(2100),
       initialDate: DateTime.now(),
     );
-    if (_picker != null) {
+    if (picker != null) {
       setState(() {
-        dateController.text = _picker.toString().split(" ")[0];
+        dateController.text = picker.toString().split(" ")[0];
       });
     }
   }
