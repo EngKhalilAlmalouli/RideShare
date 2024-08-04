@@ -133,224 +133,311 @@ class _HomeScreenTransportState extends State<HomeScreenTransport> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        GoogleMap(
-          initialCameraPosition: _kGooglePlex,
-          onMapCreated: (GoogleMapController controller) {
-            _controller = controller;
-          },
-          myLocationEnabled: true,
-          markers: _markers,
-          circles: _circles,
-        ),
-        Padding(
-          padding:
-              const EdgeInsets.only(top: 60, left: 15, right: 15, bottom: 155),
+    return Scaffold(
+      // appBar: AppBar(
+      //   backgroundColor: Colors.white.withOpacity(0),
+
+      // ),
+      drawer: Drawer(
+        backgroundColor: Colors.white,
+        width: 249,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 17.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: AppColors.lightGreen100,
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.menu_outlined),
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const NotifecationPage()));
-                      },
-                      icon: const Icon(Icons.notifications_outlined),
-                    ),
-                  ),
-                ],
+              const SizedBox(
+                height: 80,
               ),
-              Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        height: 54,
-                        width: 172,
-                        child: Button(
-                          text: 'Rental',
-                          onPressed: () {},
-                        ),
+              const CircleAvatar(
+                radius: 40,
+                backgroundImage: NetworkImage(
+                    'https://th.bing.com/th/id/OIP.OY9T9OkwVBgl21r3Mt7dCQHaHa?w=600&h=600&rs=1&pid=ImgDetMain'),
+              ),
+              const SizedBox(
+                height: 18,
+              ),
+              Text(
+                'Username',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.darkGrey,
+                ),
+              ),
+              Text(
+                'Email',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.darkGrey,
+                ),
+              ),
+              const SizedBox(
+                height: 40,
+              ),
+              TextButton.icon(
+                  onPressed: () {},
+                  label: Text('History'),
+                  icon: Icon(Icons.list)),
+              const Divider(),
+              TextButton.icon(
+                  onPressed: () {},
+                  label: Text('Complain'),
+                  icon: Icon(Icons.contact_support_outlined)),
+              const Divider(),
+              TextButton.icon(
+                  onPressed: () {},
+                  label: Text('Referral'),
+                  icon: Icon(Icons.people_alt_outlined)),
+              const Divider(),
+              TextButton.icon(
+                  onPressed: () {},
+                  label: Text('About Us'),
+                  icon: Icon(Icons.error_outline)),
+              const Divider(),
+              TextButton.icon(
+                  onPressed: () {},
+                  label: Text('Settings'),
+                  icon: Icon(Icons.settings_outlined)),
+              const Divider(),
+              TextButton.icon(
+                  onPressed: () {},
+                  label: Text('Help and Support'),
+                  icon: Icon(Icons.help_outline)),
+              const Divider(),
+              TextButton.icon(
+                  onPressed: () {},
+                  label: Text('Logout'),
+                  icon: Icon(Icons.logout)),
+            ],
+          ),
+        ),
+      ),
+      body: Stack(
+        children: [
+          GoogleMap(
+            initialCameraPosition: _kGooglePlex,
+            onMapCreated: (GoogleMapController controller) {
+              _controller = controller;
+            },
+            myLocationEnabled: true,
+            markers: _markers,
+            circles: _circles,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+                top: 60, left: 15, right: 15, bottom: 155),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.lightGreen100,
+                        borderRadius: BorderRadius.circular(4),
                       ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: IconButton(
-                          onPressed: _getCurrentLocation,
-                          icon: const Icon(Icons.location_searching_rounded),
-                        ),
+                      child: Builder(builder: (context) {
+                        return IconButton(
+                          onPressed: () {
+                            Scaffold.of(context).openDrawer();
+                          },
+                          icon: const Icon(Icons.menu_outlined),
+                        );
+                      }),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(4),
                       ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  SizedBox(
-                    height: 141,
-                    width: 364,
-                    // decoration: BoxDecoration(
-                    //   color: AppColors.lightGreen100,
-                    //   borderRadius: BorderRadius.circular(4),
-                    //   border: Border.all(
-                    //     color: AppColors.greenIcon,
-                    //     width: 1,
-                    //   ),
-                    // ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(14.0),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 54,
-                            child: TextField(
-                              style: TextStyle(
-                                color: AppColors.darkGrey,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16,
-                              ),
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor: AppColors.lightGreen,
-                                prefixIcon: const Icon(Icons.search),
-                                suffixIcon:
-                                    const Icon(Icons.favorite_border_outlined),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    width: 1,
-                                    color: AppColors.greenIcon,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    width: 1.5,
-                                    color: AppColors.greenIcon,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                hintText: 'Where would you go?',
-                                hintStyle: TextStyle(
-                                  color: AppColors.grey,
+                      child: IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const NotifecationPage()));
+                        },
+                        icon: const Icon(Icons.notifications_outlined),
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          height: 54,
+                          width: 172,
+                          child: Button(
+                            text: 'Rental',
+                            onPressed: () {},
+                          ),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: IconButton(
+                            onPressed: _getCurrentLocation,
+                            icon: const Icon(Icons.location_searching_rounded),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    SizedBox(
+                      height: 141,
+                      width: 364,
+                      // decoration: BoxDecoration(
+                      //   color: AppColors.lightGreen100,
+                      //   borderRadius: BorderRadius.circular(4),
+                      //   border: Border.all(
+                      //     color: AppColors.greenIcon,
+                      //     width: 1,
+                      //   ),
+                      // ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(14.0),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 54,
+                              child: TextField(
+                                style: TextStyle(
+                                  color: AppColors.darkGrey,
                                   fontWeight: FontWeight.w500,
                                   fontSize: 16,
                                 ),
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: AppColors.lightGreen,
+                                  prefixIcon: const Icon(Icons.search),
+                                  suffixIcon: const Icon(
+                                      Icons.favorite_border_outlined),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      width: 1,
+                                      color: AppColors.greenIcon,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      width: 1.5,
+                                      color: AppColors.greenIcon,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  hintText: 'Where would you go?',
+                                  hintStyle: TextStyle(
+                                    color: AppColors.grey,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                          const SizedBox(
-                            height: 9,
-                          ),
-                          Stack(
-                            children: [
-                              Container(
-                                height: 48,
-                                width: 336,
-                                decoration: BoxDecoration(
-                                    color: AppColors.lightGreen,
-                                    borderRadius: BorderRadius.circular(8),
-                                    border: Border.all(
-                                        color: AppColors.greenIcon, width: 1)),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          selectText = true;
-                                        });
-                                      },
-                                      child: SizedBox(
-                                        width: 85,
-                                        child: Text(
-                                          'Transport',
-                                          style: TextStyle(
-                                            color: AppColors.darkGrey,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          selectText = false;
-                                        });
-                                      },
-                                      child: Container(
-                                        alignment: Alignment.center,
-                                        width: 85,
-                                        child: Text(
-                                          'Delivery',
-                                          style: TextStyle(
-                                            color: AppColors.darkGrey,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Positioned(
-                                left: selectText ? 0 : null,
-                                right: selectText ? null : 0,
-                                child: Container(
-                                  alignment: Alignment.center,
+                            const SizedBox(
+                              height: 9,
+                            ),
+                            Stack(
+                              children: [
+                                Container(
                                   height: 48,
-                                  width: 168,
+                                  width: 336,
                                   decoration: BoxDecoration(
-                                    color: AppColors.green,
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: Text(
-                                    selectText ? 'Transport' : 'Delivery',
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                                      color: AppColors.lightGreen,
+                                      borderRadius: BorderRadius.circular(8),
+                                      border: Border.all(
+                                          color: AppColors.greenIcon,
+                                          width: 1)),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            selectText = true;
+                                          });
+                                        },
+                                        child: SizedBox(
+                                          width: 85,
+                                          child: Text(
+                                            'Transport',
+                                            style: TextStyle(
+                                              color: AppColors.darkGrey,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            selectText = false;
+                                          });
+                                        },
+                                        child: Container(
+                                          alignment: Alignment.center,
+                                          width: 85,
+                                          child: Text(
+                                            'Delivery',
+                                            style: TextStyle(
+                                              color: AppColors.darkGrey,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              )
-                            ],
-                          )
-                        ],
+                                Positioned(
+                                  left: selectText ? 0 : null,
+                                  right: selectText ? null : 0,
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    height: 48,
+                                    width: 168,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.green,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Text(
+                                      selectText ? 'Transport' : 'Delivery',
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        )
-      ],
+                  ],
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }

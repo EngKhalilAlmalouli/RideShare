@@ -9,9 +9,10 @@ part 'log_in_event.dart';
 part 'log_in_state.dart';
 
 class LogInBloc extends Bloc<LogInEvent, LogInState> {
-  LogInBloc() : super(LogInInitial()) {
+  final LoginService loginService;
+  LogInBloc(this.loginService) : super(LogInInitial()) {
     on<Login>((event, emit) async {
-      LoginRespond data = await loginService(event.user);
+      LoginRespond data = await loginService.loginService(event.user);
       if (data is LoginToken) {
         emit(LoginSuccess(token: data.body.token));
       } else if (data is LoginErrorRespond) {

@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -6,6 +7,7 @@ import 'package:rideshare/colors.dart';
 import 'package:rideshare/model/Login_model.dart';
 import 'package:rideshare/pages/home_screen.dart';
 import 'package:rideshare/pages/text_field.dart';
+import 'package:rideshare/service/login_service.dart';
 import 'package:rideshare/text_button.dart';
 
 class LoginPage extends StatefulWidget {
@@ -22,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => LogInBloc(),
+      create: (context) => LogInBloc(LoginService(Dio())),
       child: Builder(builder: (context) {
         return Scaffold(
           appBar: AppBar(

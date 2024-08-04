@@ -9,7 +9,7 @@ class SuccessRespond extends SignUpRespondModel {
 }
 
 class BadRequest extends SignUpRespondModel {
-  final String message;
+  final List<String> message;
   BadRequest({
     required this.message,
   });

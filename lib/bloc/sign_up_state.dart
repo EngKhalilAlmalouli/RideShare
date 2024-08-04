@@ -18,7 +18,7 @@ class Error extends SignUpState {
 }
 
 class Exception extends SignUpState {
-  final String message;
+  final List<String> message;
   Exception({
     required this.message,
   });

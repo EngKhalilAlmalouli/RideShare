@@ -1,8 +1,14 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:rideshare/bloc/sign_up_bloc.dart';
+import 'package:rideshare/colors.dart';
 import 'package:rideshare/model/sign_up_model.dart';
 import 'package:rideshare/pages/select_transport.dart';
+import 'package:rideshare/repo/sign_up_repo.dart';
+import 'package:rideshare/service/sign_up_service.dart';
 import 'package:rideshare/text_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -34,7 +40,8 @@ class _SetPasswordState extends State<SetPassword> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => SignUpBloc(),
+      create: (context) =>
+          SignUpBloc(SignUpRepo(signUpService: SignUpService(Dio()))),
       child: Builder(builder: (context) {
         return Scaffold(
           body: Stack(
@@ -140,6 +147,7 @@ class _SetPasswordState extends State<SetPassword> {
                     BlocConsumer<SignUpBloc, SignUpState>(
                       builder: (context, state) {
                         if (state is SignUpInitial) {
+                          print('init state');
                           return SizedBox(
                             width: 340,
                             height: 54,
@@ -158,8 +166,8 @@ class _SetPasswordState extends State<SetPassword> {
                               },
                             ),
                           );
-                        }
-                        if (state is Success) {
+                        } else if (state is Success) {
+                          print('Success state');
                           return Center(
                             child: Container(
                               decoration:
@@ -167,8 +175,8 @@ class _SetPasswordState extends State<SetPassword> {
                               child: const Text('Success'),
                             ),
                           );
-                        }
-                        if (state is Error) {
+                        } else if (state is Error) {
+                          print('error state');
                           return Center(
                             child: Column(
                               children: [
@@ -191,12 +199,12 @@ class _SetPasswordState extends State<SetPassword> {
                                     },
                                   ),
                                 ),
-                                Text(state.message),
                               ],
                             ),
                           );
-                        }
-                        if (state is Exception) {
+                        } else if (state is Exception) {
+                          print('exception state');
+                          List<String> errorMessages = state.message;
                           return Center(
                             child: Column(
                               children: [
@@ -204,7 +212,7 @@ class _SetPasswordState extends State<SetPassword> {
                                   width: 340,
                                   height: 54,
                                   child: Button(
-                                    text: 'Register',
+                                    text: 'Register !',
                                     onPressed: () {
                                       context.read<SignUpBloc>().add(SignUpUser(
                                           user: SignUpModel(
@@ -219,11 +227,36 @@ class _SetPasswordState extends State<SetPassword> {
                                     },
                                   ),
                                 ),
-                                Text(state.message),
+                                SizedBox(
+                                  height: 250,
+                                  child: ListView.builder(
+                                      itemCount: errorMessages.length,
+                                      itemBuilder: (context, index) {
+                                        return Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(15),
+                                                color: AppColors.lightGreen100),
+                                            child: ListTile(
+                                              title: Text(errorMessages[index]),
+                                            ),
+                                          ),
+                                        );
+                                      }),
+                                )
+                                // Text(state.message),
                               ],
                             ),
+                          );
+                        } else if (state is Loading) {
+                          print('loading state');
+                          return Center(
+                            child: CircularProgressIndicator(),
                           );
                         } else {
+                          print('else state');
                           return const Center(
                             child: CircularProgressIndicator(),
                           );
@@ -236,6 +269,14 @@ class _SetPasswordState extends State<SetPassword> {
                               MaterialPageRoute(
                                   builder: (context) =>
                                       const SelectTransport()));
+                        }
+                        if (state is Error) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(state.message),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
                         }
                       },
                     ),
