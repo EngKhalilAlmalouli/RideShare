@@ -1,8 +1,8 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:dio/dio.dart';
+import 'package:rideshare/const.dart';
 import 'package:rideshare/model/error/exception.dart';
 import 'package:rideshare/model/sign_up_model.dart';
 import 'package:rideshare/model/sign_up_respond_model.dart';
+import 'package:rideshare/service/shared_prefrences/shared.dart';
 import 'package:rideshare/service/sign_up_service.dart';
 
 class SignUpRepo {
@@ -11,11 +11,14 @@ class SignUpRepo {
     required this.signUpService,
   });
 
-  Future<SignUpRespondModel> SignUp(SignUpModel user) async {
+  Future<SignUpRespondModel> signUp(SignUpModel user) async {
     try {
       var data = await signUpService.signUpService(user);
-      return SuccessRespond(token: data.data['token']);
-    } on UsernameAlreadyInUse catch (e) {
+
+      saveAuthStatus(true);
+      token = data.data['body']['token'];
+      return SuccessRespond(token: data.data['body']['token']);
+    } on UsernameAlreadyInUse {
       return ErrorRespond(message: 'username already in use');
     } on BadRequestSignUp catch (e) {
       return BadRequest(message: e.messages);

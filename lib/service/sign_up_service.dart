@@ -1,10 +1,6 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
-import 'package:rideshare/const.dart';
 import 'package:rideshare/model/error/exception.dart';
 import 'package:rideshare/model/sign_up_model.dart';
-import 'package:rideshare/model/sign_up_respond_model.dart';
 import 'package:rideshare/service/service.dart';
 
 class SignUpService extends Service {

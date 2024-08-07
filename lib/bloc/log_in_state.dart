@@ -7,21 +7,21 @@ sealed class LogInState {}
 final class LogInInitial extends LogInState {}
 
 class LoginSuccess extends LogInState {
-  String token;
+  final String token;
   LoginSuccess({
     required this.token,
   });
 }
 
 class LoginError extends LogInState {
-  String message;
+  final String message;
   LoginError({
     required this.message,
   });
 }
 
 class LoginException extends LogInState {
-  String exceptionMessage;
+  final String exceptionMessage;
   LoginException({
     required this.exceptionMessage,
   });

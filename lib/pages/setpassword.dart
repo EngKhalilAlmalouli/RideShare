@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:rideshare/bloc/sign_up_bloc.dart';
 import 'package:rideshare/colors.dart';
 import 'package:rideshare/model/sign_up_model.dart';
-import 'package:rideshare/pages/select_transport.dart';
+import 'package:rideshare/pages/home_screen.dart';
 import 'package:rideshare/repo/sign_up_repo.dart';
 import 'package:rideshare/service/sign_up_service.dart';
 import 'package:rideshare/text_button.dart';
@@ -147,7 +147,6 @@ class _SetPasswordState extends State<SetPassword> {
                     BlocConsumer<SignUpBloc, SignUpState>(
                       builder: (context, state) {
                         if (state is SignUpInitial) {
-                          print('init state');
                           return SizedBox(
                             width: 340,
                             height: 54,
@@ -167,7 +166,6 @@ class _SetPasswordState extends State<SetPassword> {
                             ),
                           );
                         } else if (state is Success) {
-                          print('Success state');
                           return Center(
                             child: Container(
                               decoration:
@@ -176,7 +174,6 @@ class _SetPasswordState extends State<SetPassword> {
                             ),
                           );
                         } else if (state is Error) {
-                          print('error state');
                           return Center(
                             child: Column(
                               children: [
@@ -203,7 +200,6 @@ class _SetPasswordState extends State<SetPassword> {
                             ),
                           );
                         } else if (state is Exception) {
-                          print('exception state');
                           List<String> errorMessages = state.message;
                           return Center(
                             child: Column(
@@ -251,12 +247,10 @@ class _SetPasswordState extends State<SetPassword> {
                             ),
                           );
                         } else if (state is Loading) {
-                          print('loading state');
                           return Center(
                             child: CircularProgressIndicator(),
                           );
                         } else {
-                          print('else state');
                           return const Center(
                             child: CircularProgressIndicator(),
                           );
@@ -267,8 +261,7 @@ class _SetPasswordState extends State<SetPassword> {
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      const SelectTransport()));
+                                  builder: (context) => const HomeScreen()));
                         }
                         if (state is Error) {
                           ScaffoldMessenger.of(context).showSnackBar(

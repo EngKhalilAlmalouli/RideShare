@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:rideshare/bloc/log_in_bloc.dart';
 import 'package:rideshare/colors.dart';
 import 'package:rideshare/model/Login_model.dart';
