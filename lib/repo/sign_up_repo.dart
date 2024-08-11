@@ -17,6 +17,7 @@ class SignUpRepo {
 
       saveAuthStatus(true);
       token = data.data['body']['token'];
+      print(data.data['body']['token']);
       return SuccessRespond(token: data.data['body']['token']);
     } on UsernameAlreadyInUse {
       return ErrorRespond(message: 'username already in use');

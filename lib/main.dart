@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rideshare/const.dart';
+import 'package:rideshare/pages/change_password.dart';
 import 'package:rideshare/pages/home_screen.dart';
 import 'package:rideshare/pages/onBoarding_page.dart';
 
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: Scaffold(
-        body: auth ? const HomeScreen() : const OnBoardingPage(),
+        body: auth ? const ChangePasswordPage() : const OnBoardingPage(),
       ),
     );
   }

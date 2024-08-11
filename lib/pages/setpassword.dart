@@ -234,9 +234,16 @@ class _SetPasswordState extends State<SetPassword> {
                                             decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(15),
-                                                color: AppColors.lightGreen100),
+                                                color: AppColors.lightGreen),
                                             child: ListTile(
-                                              title: Text(errorMessages[index]),
+                                              title: Text(
+                                                errorMessages[index],
+                                                style: const TextStyle(
+                                                  color: Color(0xFF898989),
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
                                             ),
                                           ),
                                         );

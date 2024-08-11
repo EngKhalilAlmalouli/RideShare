@@ -22,6 +22,7 @@ class LoginService extends Service {
 
       if (response.statusCode == 200) {
         token = response.data['body']['token'];
+        print(response.data['body']['token']);
         return LoginToken.fromMap(response.data);
       } else {
         return LoginErrorRespond(message: 'lol');
