@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:rideshare/colors.dart';
-import 'package:rideshare/pages/favourite.dart';
-import 'package:rideshare/pages/home_screen_transport.dart';
-import 'package:rideshare/pages/offer.dart';
+import 'package:rideshare/pages/favourite/favourite.dart';
+import 'package:rideshare/pages/transport/home_screen_transport.dart';
+import 'package:rideshare/pages/offer/offer.dart';
 import 'package:rideshare/pages/profile.dart';
-import 'package:rideshare/pages/wallet.dart';
+import 'package:rideshare/pages/wallet/wallet.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

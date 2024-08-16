@@ -6,3 +6,9 @@ class BadRequestSignUp implements Exception {
     required this.messages,
   });
 }
+
+// bicycle is empty
+class EmptyBicycleRespons implements Exception {}
+
+// No hubs available
+class EmptyHubs implements Exception {}

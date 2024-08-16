@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:rideshare/pages/message_maps_req.dart';
+import 'package:rideshare/pages/Authentication/message_maps_req.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key});
