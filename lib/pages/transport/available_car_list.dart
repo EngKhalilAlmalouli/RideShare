@@ -10,15 +10,12 @@ class AvailableCarList extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        leading: IconButton(
-          onPressed: () {},
-          icon: const Row(
-            children: [
-              Icon(Icons.arrow_back),
-              Text('Back'),
-            ],
-          ),
-        ),
+        leading: TextButton.icon(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            label: const Text('Back'),
+            icon: const Icon(Icons.arrow_back_ios_new_outlined)),
       ),
       body: Column(
         children: [

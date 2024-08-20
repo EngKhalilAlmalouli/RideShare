@@ -1,4 +1,4 @@
 String token =
-    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIwOTM4NDA2Nzc3IiwiaWF0IjoxNzIzNDg1NDgyLCJleHAiOjE3MjM1NzE4ODJ9.N1yVsHInydTpRKm4R3lVrtSDPCDrF8mgI4HMDQZz0yw';
+    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIwOTMwNTQzNDAwIiwiaWF0IjoxNzI0MTY5MjMxLCJleHAiOjE3MjQyNTU2MzF9.68Vfy8hWsISXhOXkkG5sSF4sQWEqoOtRWof3pHuEm2I';
 String googleApiKey = 'AIzaSyAeLUpyozCjrCIxNBNmwVfCERYrHZh3MbU';
 bool auth = true;
