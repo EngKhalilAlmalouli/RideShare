@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:rideshare/bloc/reservation/bloc/update_to_during_reservation_bloc.dart';
+import 'package:rideshare/bloc/reservation/update_to_during_reservation_bloc.dart';
 import 'package:rideshare/bloc/reservation/get_reservations_bloc.dart';
 import 'package:rideshare/bloc/transport/get_all_bicycles_bloc.dart';
 import 'package:rideshare/colors.dart';
@@ -285,130 +285,131 @@ class _ReservationsState extends State<Reservations> {
                               listener: (context, state2) {},
                               builder: (context, state2) {
                                 if (state2 is SuccessFetchAllBicycles) {
-                                  return InkWell(
-                                    onTap: () {
-                                      if (state.successGettingReservations
-                                              .body[index].reservationStatus ==
-                                          "PENDING") {
-                                        Body body = state
-                                            .successGettingReservations
-                                            .body[index];
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 15,
+                                      vertical: 8,
+                                    ),
+                                    child: InkWell(
+                                      onTap: () {
+                                        if (state
+                                                .successGettingReservations
+                                                .body[index]
+                                                .reservationStatus ==
+                                            "PENDING") {
+                                          Body body = state
+                                              .successGettingReservations
+                                              .body[index];
 
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                ReservationPayment(
-                                              reservation: reservation
-                                                  .ReservationSuccessRespond(
-                                                      message:
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ReservationPayment(
+                                                reservation: reservation
+                                                    .ReservationSuccessRespond(
+                                                        message: state
+                                                            .successGettingReservations
+                                                            .message,
+                                                        status: state
+                                                            .successGettingReservations
+                                                            .status,
+                                                        localDateTime: state
+                                                            .successGettingReservations
+                                                            .localDateTime,
+                                                        body: reservation.Body
+                                                            .fromMap(
+                                                                body.toMap())),
+                                                price: state2.bicycles!.body
+                                                    .firstWhere(
+                                                      (b) =>
+                                                          b.modelPrice.model ==
                                                           state
                                                               .successGettingReservations
-                                                              .message,
-                                                      status: state
-                                                          .successGettingReservations
-                                                          .status,
-                                                      localDateTime: state
-                                                          .successGettingReservations
-                                                          .localDateTime,
-                                                      body: reservation.Body
-                                                          .fromMap(
-                                                              body.toMap())),
-                                              price: state2.bicycles!.body
-                                                  .firstWhere(
-                                                    (b) =>
-                                                        b.modelPrice.model ==
-                                                        state
-                                                            .successGettingReservations
-                                                            .body[index]
-                                                            .bicycle,
-                                                  )
-                                                  .modelPrice
-                                                  .price,
-                                              model: state2.bicycles!.body
-                                                  .firstWhere(
-                                                    (b) =>
-                                                        b.modelPrice.model ==
-                                                        state
-                                                            .successGettingReservations
-                                                            .body[index]
-                                                            .bicycle,
-                                                  )
-                                                  .modelPrice
-                                                  .model,
-                                              type: state2.bicycles!.body
-                                                  .firstWhere(
-                                                    (b) =>
-                                                        b.modelPrice.model ==
-                                                        state
-                                                            .successGettingReservations
-                                                            .body[index]
-                                                            .bicycle,
-                                                  )
-                                                  .type,
-                                              size: state2.bicycles!.body
-                                                  .firstWhere(
-                                                    (b) =>
-                                                        b.modelPrice.model ==
-                                                        state
-                                                            .successGettingReservations
-                                                            .body[index]
-                                                            .bicycle,
-                                                  )
-                                                  .size,
-                                              note: state2.bicycles!.body
-                                                  .firstWhere(
-                                                    (b) =>
-                                                        b.modelPrice.model ==
-                                                        state
-                                                            .successGettingReservations
-                                                            .body[index]
-                                                            .bicycle,
-                                                  )
-                                                  .note,
-                                              photoPath: state2.bicycles!.body
-                                                  .firstWhere(
-                                                    (b) =>
-                                                        b.modelPrice.model ==
-                                                        state
-                                                            .successGettingReservations
-                                                            .body[index]
-                                                            .bicycle,
-                                                  )
-                                                  .photoPath,
+                                                              .body[index]
+                                                              .bicycle,
+                                                    )
+                                                    .modelPrice
+                                                    .price,
+                                                model: state2.bicycles!.body
+                                                    .firstWhere(
+                                                      (b) =>
+                                                          b.modelPrice.model ==
+                                                          state
+                                                              .successGettingReservations
+                                                              .body[index]
+                                                              .bicycle,
+                                                    )
+                                                    .modelPrice
+                                                    .model,
+                                                type: state2.bicycles!.body
+                                                    .firstWhere(
+                                                      (b) =>
+                                                          b.modelPrice.model ==
+                                                          state
+                                                              .successGettingReservations
+                                                              .body[index]
+                                                              .bicycle,
+                                                    )
+                                                    .type,
+                                                size: state2.bicycles!.body
+                                                    .firstWhere(
+                                                      (b) =>
+                                                          b.modelPrice.model ==
+                                                          state
+                                                              .successGettingReservations
+                                                              .body[index]
+                                                              .bicycle,
+                                                    )
+                                                    .size,
+                                                note: state2.bicycles!.body
+                                                    .firstWhere(
+                                                      (b) =>
+                                                          b.modelPrice.model ==
+                                                          state
+                                                              .successGettingReservations
+                                                              .body[index]
+                                                              .bicycle,
+                                                    )
+                                                    .note,
+                                                photoPath: state2.bicycles!.body
+                                                    .firstWhere(
+                                                      (b) =>
+                                                          b.modelPrice.model ==
+                                                          state
+                                                              .successGettingReservations
+                                                              .body[index]
+                                                              .bicycle,
+                                                    )
+                                                    .photoPath,
+                                              ),
                                             ),
-                                          ),
-                                        );
-                                      } else if (state
-                                              .successGettingReservations
-                                              .body[index]
-                                              .reservationStatus ==
-                                          "NOT_STARTED") {
-                                        functionDialog(
-                                          context,
-                                          (bool run) {
-                                            if (run) {
-                                              context.read<
-                                                  UpdateToDuringReservationBloc>()
-                                                ..add(
-                                                  UpdateDuring(
-                                                    id: state
-                                                        .successGettingReservations
-                                                        .body[index]
-                                                        .id,
-                                                  ),
-                                                );
-                                            }
-                                          },
-                                          "You are starting this reservation",
-                                        );
-                                      }
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 15,
-                                        vertical: 8,
-                                      ),
+                                          );
+                                        } else if (state
+                                                .successGettingReservations
+                                                .body[index]
+                                                .reservationStatus ==
+                                            "NOT_STARTED") {
+                                          functionDialog(
+                                            context,
+                                            (bool run) {
+                                              if (run) {
+                                                context.read<
+                                                    UpdateToDuringReservationBloc>()
+                                                  ..add(
+                                                    UpdateDuring(
+                                                      id: state
+                                                          .successGettingReservations
+                                                          .body[index]
+                                                          .id,
+                                                    ),
+                                                  );
+                                              }
+                                            },
+                                            "You are starting this reservation",
+                                          );
+                                        }
+                                      },
                                       child: Container(
                                         width: 362,
                                         height: selectedIndex == 2 ? 104 : 64,

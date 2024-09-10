@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rideshare/bloc/reservation/bloc/bloc/get_all_bicycles_categories_bloc.dart';
+import 'package:rideshare/bloc/reservation/get_all_bicycles_categories_bloc.dart';
 import 'package:rideshare/colors.dart';
 import 'package:rideshare/pages/transport/select_avilable_bicycle.dart';
 import 'package:rideshare/repo/reservation/get_all_bicycles_categories_repo.dart';

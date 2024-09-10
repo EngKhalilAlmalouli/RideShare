@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rideshare/colors.dart';
 import 'package:rideshare/pages/Authentication/setpassword.dart';
-import 'package:rideshare/pages/text_field.dart';
+import 'package:rideshare/text_field.dart';
 import 'package:rideshare/text_button.dart';
 
 class SignUpPage extends StatefulWidget {

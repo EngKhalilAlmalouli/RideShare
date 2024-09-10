@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:rideshare/pages/map.dart';
+import 'package:rideshare/pages/onboarding/map.dart';
 
 class OnBoardingPage extends StatefulWidget {
   const OnBoardingPage({super.key});

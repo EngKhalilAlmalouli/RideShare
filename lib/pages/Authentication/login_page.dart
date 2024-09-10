@@ -5,7 +5,7 @@ import 'package:rideshare/bloc/authentication/log_in_bloc.dart';
 import 'package:rideshare/colors.dart';
 import 'package:rideshare/model/authentication/Login_model.dart';
 import 'package:rideshare/pages/home_screen.dart';
-import 'package:rideshare/pages/text_field.dart';
+import 'package:rideshare/text_field.dart';
 import 'package:rideshare/service/auth/login_service.dart';
 import 'package:rideshare/text_button.dart';
 import 'package:rideshare/widgets.dart';

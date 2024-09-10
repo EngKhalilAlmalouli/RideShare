@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rideshare/bloc/wallet/create_new_wallet_bloc.dart';
 import 'package:rideshare/colors.dart';
 import 'package:rideshare/model/wallet/create_new_wallet_model.dart';
-import 'package:rideshare/pages/text_field.dart';
+import 'package:rideshare/text_field.dart';
 import 'package:rideshare/repo/wallet/create_new_wallet_repo.dart';
 import 'package:rideshare/service/wallet/create_new_wallet_service.dart';
 import 'package:rideshare/text_button.dart';

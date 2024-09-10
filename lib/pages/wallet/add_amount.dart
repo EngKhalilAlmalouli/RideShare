@@ -5,7 +5,7 @@ import 'package:rideshare/bloc/wallet/add_money_to_my_wallet_bloc.dart';
 import 'package:rideshare/colors.dart';
 import 'package:rideshare/bloc/wallet/get_all_valid_codes_bloc.dart';
 import 'package:rideshare/pages/home_screen.dart';
-import 'package:rideshare/pages/text_field.dart';
+import 'package:rideshare/text_field.dart';
 import 'package:rideshare/repo/wallet/add_money_to_my_wallet_repo.dart';
 import 'package:rideshare/repo/wallet/get_all_valid_codes_repo.dart';
 import 'package:rideshare/pages/wallet/message_valid_codes.dart';
