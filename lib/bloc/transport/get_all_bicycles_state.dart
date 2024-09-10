@@ -7,9 +7,12 @@ sealed class GetAllBicyclesState {}
 final class GetAllBicyclesInitial extends GetAllBicyclesState {}
 
 class SuccessFetchAllBicycles extends GetAllBicyclesState {
-  final BicycleRespondModel bicycles;
-
-  SuccessFetchAllBicycles(this.bicycles);
+  final BicycleRespondModel? bicycles;
+  final byHub.BicycleByHubRespondModel? bicyclesHub;
+  SuccessFetchAllBicycles({
+    this.bicycles,
+    this.bicyclesHub,
+  });
 }
 
 class FetchingEmptyBicycles extends GetAllBicyclesState {

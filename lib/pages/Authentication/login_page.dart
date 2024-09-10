@@ -8,6 +8,7 @@ import 'package:rideshare/pages/home_screen.dart';
 import 'package:rideshare/pages/text_field.dart';
 import 'package:rideshare/service/auth/login_service.dart';
 import 'package:rideshare/text_button.dart';
+import 'package:rideshare/widgets.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -31,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
             leading: const BackButton(),
           ),
           body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            // mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
                 'Log in',
@@ -71,11 +72,15 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 40),
               BlocConsumer<LogInBloc, LogInState>(listener: (context, state) {
                 if (state is LoginSuccess) {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => HomeScreen()));
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => HomeScreen(
+                                selectedWidget: 0,
+                              )));
                 }
               }, builder: (context, state) {
                 if (state is LoginSuccess) {
@@ -147,18 +152,6 @@ class _LoginPageState extends State<LoginPage> {
           ),
         );
       }),
-    );
-  }
-
-  Widget togglePassword(bool value, void Function(bool) onChanged) {
-    return IconButton(
-      onPressed: () {
-        onChanged(!value);
-      },
-      icon: !value
-          ? const Icon(Icons.visibility_outlined)
-          : const Icon(Icons.visibility_off_outlined),
-      color: Colors.grey,
     );
   }
 }

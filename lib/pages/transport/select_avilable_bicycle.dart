@@ -1,14 +1,28 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:rideshare/bloc/transport/get_all_bicycles_bloc.dart';
 import 'package:rideshare/colors.dart';
+import 'package:rideshare/pages/Reservation/request_reservation.dart';
 import 'package:rideshare/repo/bicycle/get_all_bicycle_repo.dart';
 import 'package:rideshare/service/%20bicycle/get_all_bicycle_service.dart';
 import 'package:rideshare/text_button.dart';
 
 class SelectAvilableBicyclePage extends StatefulWidget {
-  const SelectAvilableBicyclePage({super.key});
+  final int fromId;
+  final int toId;
+  final String fromName;
+  final String toName;
+  final String roadBikes;
+
+  const SelectAvilableBicyclePage(
+      {super.key,
+      required this.fromId,
+      required this.toId,
+      required this.fromName,
+      required this.toName,
+      required this.roadBikes});
 
   @override
   State<SelectAvilableBicyclePage> createState() =>
@@ -16,13 +30,53 @@ class SelectAvilableBicyclePage extends StatefulWidget {
 }
 
 class _SelectAvilableBicyclePageState extends State<SelectAvilableBicyclePage> {
+  Position? _currentPosition;
+
+  Future<void> _getCurrentLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    _currentPosition = await Geolocator.getCurrentPosition();
+  }
+
+  @override
+  void initState() {
+    _getCurrentLocation();
+    super.initState();
+  }
+
+  int fromHubId = -1;
+  int toHubId = -1;
+  late String startingDateTime;
+
+  String selectTimeTitle = 'Select Time';
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => GetAllBicyclesBloc(GetAllBicyclesRepo(
           getAllBicycleService: GetAllBicycleService(Dio()))),
       child: Builder(builder: (context) {
-        context.read<GetAllBicyclesBloc>().add(GetAllBicycles());
+        context.read<GetAllBicyclesBloc>().add(GetAllBicyclesByHub(
+            id: widget.fromId, bicycleCategory: widget.roadBikes));
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.white,
@@ -64,9 +118,7 @@ class _SelectAvilableBicyclePageState extends State<SelectAvilableBicyclePage> {
                 ),
               ),
               BlocConsumer<GetAllBicyclesBloc, GetAllBicyclesState>(
-                listener: (context, state) {
-                  // TODO: implement listener
-                },
+                listener: (context, state) {},
                 builder: (context, state) {
                   if (state is GetAllBicyclesInitial) {
                     return const Center(
@@ -88,7 +140,7 @@ class _SelectAvilableBicyclePageState extends State<SelectAvilableBicyclePage> {
                             padding:
                                 const EdgeInsets.only(left: 26, bottom: 30),
                             child: Text(
-                              '${state.bicycles.body.length} bicycle found',
+                              '${state.bicyclesHub!.body.bicycleList.length} bicycle found',
                               style: const TextStyle(
                                 color: Color(0xFFb8b8b8),
                                 fontSize: 14,
@@ -101,7 +153,8 @@ class _SelectAvilableBicyclePageState extends State<SelectAvilableBicyclePage> {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 15),
                               child: ListView.builder(
-                                itemCount: state.bicycles.body.length,
+                                itemCount:
+                                    state.bicyclesHub!.body.bicycleList.length,
                                 itemBuilder: (context, index) {
                                   return Padding(
                                     padding: const EdgeInsets.only(bottom: 20),
@@ -134,9 +187,11 @@ class _SelectAvilableBicyclePageState extends State<SelectAvilableBicyclePage> {
                                                       children: [
                                                         Text(
                                                           state
-                                                              .bicycles
-                                                              .body[index]
-                                                              .modelPrice
+                                                              .bicyclesHub!
+                                                              .body
+                                                              .bicycleList[
+                                                                  index]
+                                                              .model_price
                                                               .model,
                                                           style: TextStyle(
                                                               color: AppColors
@@ -149,7 +204,7 @@ class _SelectAvilableBicyclePageState extends State<SelectAvilableBicyclePage> {
                                                         const SizedBox(
                                                             width: 10),
                                                         Text(
-                                                          "( ${state.bicycles.body[index].modelPrice.price.toString()} )",
+                                                          "( ${state.bicyclesHub!.body.bicycleList[index].model_price.price.toString()} )",
                                                           style: TextStyle(
                                                               color: AppColors
                                                                   .green,
@@ -163,8 +218,12 @@ class _SelectAvilableBicyclePageState extends State<SelectAvilableBicyclePage> {
                                                     Row(
                                                       children: [
                                                         Text(
-                                                          state.bicycles
-                                                              .body[index].type,
+                                                          state
+                                                              .bicyclesHub!
+                                                              .body
+                                                              .bicycleList[
+                                                                  index]
+                                                              .type,
                                                           style: TextStyle(
                                                               color: AppColors
                                                                   .darkGrey,
@@ -184,8 +243,12 @@ class _SelectAvilableBicyclePageState extends State<SelectAvilableBicyclePage> {
                                                                       .w500),
                                                         ),
                                                         Text(
-                                                          state.bicycles
-                                                              .body[index].size
+                                                          state
+                                                              .bicyclesHub!
+                                                              .body
+                                                              .bicycleList[
+                                                                  index]
+                                                              .size
                                                               .toString(),
                                                           style: TextStyle(
                                                               color: AppColors
@@ -198,7 +261,10 @@ class _SelectAvilableBicyclePageState extends State<SelectAvilableBicyclePage> {
                                                       ],
                                                     ),
                                                     Text(
-                                                      state.bicycles.body[index]
+                                                      state
+                                                          .bicyclesHub!
+                                                          .body
+                                                          .bicycleList[index]
                                                           .note,
                                                       style: TextStyle(
                                                           color:
@@ -213,7 +279,7 @@ class _SelectAvilableBicyclePageState extends State<SelectAvilableBicyclePage> {
                                                     height: 59,
                                                     width: 101,
                                                     child: Image.network(
-                                                      "https://${state.bicycles.body[index].photoPath}",
+                                                      "https://${state.bicyclesHub!.body.bicycleList[index].photoPath}",
                                                       fit: BoxFit.cover,
                                                       errorBuilder:
                                                           (BuildContext context,
@@ -233,8 +299,29 @@ class _SelectAvilableBicyclePageState extends State<SelectAvilableBicyclePage> {
                                               width: 340,
                                               height: 54,
                                               child: BorderButton(
-                                                text: 'View bicycle list',
-                                                onPressed: () {},
+                                                text: 'Book the bike',
+                                                onPressed: () {
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              RequestReservation(
+                                                                currentPosition:
+                                                                    _currentPosition!,
+                                                                bicycleHub: state
+                                                                    .bicyclesHub!
+                                                                    .body
+                                                                    .bicycleList[index],
+                                                                fromId: widget
+                                                                    .fromId,
+                                                                toId:
+                                                                    widget.toId,
+                                                                fromName: widget
+                                                                    .fromName,
+                                                                toName: widget
+                                                                    .toName,
+                                                              )));
+                                                },
                                               ),
                                             ),
                                           ],
@@ -255,7 +342,10 @@ class _SelectAvilableBicyclePageState extends State<SelectAvilableBicyclePage> {
                     );
                   } else if (state is ExceptionGettingBicycles) {
                     return Center(
-                      child: Text(state.message),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Text(state.message),
+                      ),
                     );
                   } else if (state is LoadingWhileGettingAllBicycles) {
                     return const Center(

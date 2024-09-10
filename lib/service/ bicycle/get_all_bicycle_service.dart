@@ -16,4 +16,18 @@ class GetAllBicycleService extends Service {
       rethrow;
     }
   }
+
+  Future<Response> getAllBicycleByHubservice(
+      int id, String bicycleCategory) async {
+    try {
+      response = await dio.get(
+          "$baseUrl/api/v1/hub-content/$id?bicycleCategory=$bicycleCategory",
+          options: options);
+
+      return response;
+    } on DioException catch (e) {
+      print(e.response);
+      rethrow;
+    }
+  }
 }

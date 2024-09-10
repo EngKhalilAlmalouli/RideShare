@@ -17,6 +17,8 @@ class GetMyWalletInfoBloc
         emit(SuccessGettingMyWalletInfo(walletInfoModel: data));
       } else if (data is ExceptionMyWalletInfo) {
         emit(ExceptionGettingMyWalletInfo(message: data.message));
+      } else if (data is NoWalletToShow) {
+        emit(NoWalletToShowState(message: data.message));
       } else {
         emit(LoadingGettingMyWalletInfo());
       }

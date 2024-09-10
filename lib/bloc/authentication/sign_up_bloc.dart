@@ -16,7 +16,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         emit(Success());
       } else if (data is ErrorRespond) {
         emit(Error(message: data.message));
-      } else if (data is BadRequest) {
+      } else if (data is SignUpBadRequest) {
         emit(Exception(message: data.message));
       } else if (data is ExceptionRespond) {
         print('error bloc layer');

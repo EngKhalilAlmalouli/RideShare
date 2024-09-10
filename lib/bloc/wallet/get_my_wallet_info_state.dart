@@ -13,6 +13,13 @@ class SuccessGettingMyWalletInfo extends GetMyWalletInfoState {
   });
 }
 
+class NoWalletToShowState extends GetMyWalletInfoState {
+  final String message;
+  NoWalletToShowState({
+    required this.message,
+  });
+}
+
 class ExceptionGettingMyWalletInfo extends GetMyWalletInfoState {
   final String message;
   ExceptionGettingMyWalletInfo({

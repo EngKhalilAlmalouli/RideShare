@@ -4,10 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rideshare/bloc/wallet/add_money_to_my_wallet_bloc.dart';
 import 'package:rideshare/colors.dart';
 import 'package:rideshare/bloc/wallet/get_all_valid_codes_bloc.dart';
+import 'package:rideshare/pages/home_screen.dart';
 import 'package:rideshare/pages/text_field.dart';
 import 'package:rideshare/repo/wallet/add_money_to_my_wallet_repo.dart';
 import 'package:rideshare/repo/wallet/get_all_valid_codes_repo.dart';
-import 'package:rideshare/repo/wallet/message_valid_codes.dart';
+import 'package:rideshare/pages/wallet/message_valid_codes.dart';
 import 'package:rideshare/service/wallet/add_money_to_my_wallet_service.dart';
 import 'package:rideshare/service/wallet/get_all_valid_codes_service.dart';
 import 'package:rideshare/text_button.dart';
@@ -137,7 +138,11 @@ class _AddAmountPageState extends State<AddAmountPage> {
                                         Text(state.validCodesModel.message),
                                   ),
                                 );
-                                Navigator.pop(context);
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const HomeScreen(
+                                            selectedWidget: 4)));
                               }
                               if (state is UnvalidForAddingMoney) {
                                 ScaffoldMessenger.of(context).showSnackBar(

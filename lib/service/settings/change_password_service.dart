@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:rideshare/model/authentication/change_password_model.dart';
+import 'package:rideshare/model/Settings/change_password_model.dart';
 import 'package:rideshare/service/service.dart';
 
 class ChangePasswordService extends Service {
@@ -10,11 +10,16 @@ class ChangePasswordService extends Service {
     try {
       Map<String, dynamic> passwordMap = userPassword.toMap();
 
-      response = await dio.post('$baseUrl/api/v1/users/change-password',
-          data: passwordMap);
+      response = await dio.put(
+        '$baseUrl/api/v1/users/change-password',
+        options: options,
+        data: passwordMap,
+      );
       return response;
     } on DioException catch (e) {
-      throw e;
+      print("on DioException catch (e) -----------------------------------");
+      print(e);
+      rethrow;
     }
   }
 }

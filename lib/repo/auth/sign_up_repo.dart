@@ -22,7 +22,7 @@ class SignUpRepo {
     } on UsernameAlreadyInUse {
       return ErrorRespond(message: 'username already in use');
     } on BadRequestSignUp catch (e) {
-      return BadRequest(message: e.messages);
+      return SignUpBadRequest(message: e.messages);
     } catch (e) {
       return ExceptionRespond(message: e.toString());
     }

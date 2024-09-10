@@ -1,9 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:rideshare/colors.dart';
+import 'package:rideshare/pages/Reservation/choose_category.dart';
+import 'package:rideshare/pages/transport/available_car_list.dart';
 import 'package:rideshare/pages/transport/select_avilable_bicycle.dart';
 
 class SelectTransport extends StatelessWidget {
-  const SelectTransport({super.key});
+  final int fromId;
+  final int toId;
+  final String fromName;
+  final String toName;
+
+  const SelectTransport(
+      {super.key,
+      required this.fromId,
+      required this.toId,
+      required this.fromName,
+      required this.toName});
 
   @override
   Widget build(BuildContext context) {
@@ -63,35 +75,41 @@ class SelectTransport extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    height: 160,
-                    width: 160,
-                    decoration: BoxDecoration(
-                      color: AppColors.lightGreen,
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                        color: AppColors.greenIcon,
-                        width: 1,
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const AvailableCarList()));
+                    },
+                    child: Container(
+                      height: 160,
+                      width: 160,
+                      decoration: BoxDecoration(
+                        color: AppColors.lightGreen,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          color: AppColors.greenIcon,
+                          width: 1,
+                        ),
                       ),
-                    ),
-                    child: Column(
-                      children: [
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        Image.asset("assets/car.png"),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "Car",
-                          style: TextStyle(
-                            color: AppColors.darkGrey,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
+                      child: Column(
+                        children: [
+                          const SizedBox(
+                            height: 30,
                           ),
-                        ),
-                      ],
+                          Image.asset("assets/car.png"),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            "Car",
+                            style: TextStyle(
+                              color: AppColors.darkGrey,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -143,7 +161,11 @@ class SelectTransport extends StatelessWidget {
                       Navigator.push(
                         context,
                         (MaterialPageRoute(
-                          builder: (context) => SelectAvilableBicyclePage(),
+                          builder: (context) => ChooseCategory(
+                              fromId: fromId,
+                              toId: toId,
+                              fromName: fromName,
+                              toName: toName),
                         )),
                       );
                     },

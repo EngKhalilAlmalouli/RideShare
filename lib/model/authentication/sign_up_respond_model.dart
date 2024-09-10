@@ -8,9 +8,9 @@ class SuccessRespond extends SignUpRespondModel {
   });
 }
 
-class BadRequest extends SignUpRespondModel {
+class SignUpBadRequest extends SignUpRespondModel {
   final List<String> message;
-  BadRequest({
+  SignUpBadRequest({
     required this.message,
   });
 }

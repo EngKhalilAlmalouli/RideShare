@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:rideshare/model/%20bicycle/bicycle_by_hub_model.dart' as byHub;
+
 import 'package:rideshare/model/%20bicycle/bicycle_respond_model.dart';
 import 'package:rideshare/repo/bicycle/get_all_bicycle_repo.dart';
 
@@ -17,7 +19,19 @@ class GetAllBicyclesBloc
       } else if (data is ExceptionBicycleRespondModel) {
         emit(ExceptionGettingBicycles(message: data.message));
       } else if (data is BicycleRespondModel) {
-        emit(SuccessFetchAllBicycles(data));
+        emit(SuccessFetchAllBicycles(bicycles: data));
+      } else {
+        emit(LoadingWhileGettingAllBicycles());
+      }
+    });
+
+    on<GetAllBicyclesByHub>((event, emit) async {
+      var data = await getAllBicyclesRepo.getAllBicyclesByHubRepo(
+          event.id, event.bicycleCategory);
+      if (data is byHub.ExceptionBicycleRespondModel) {
+        emit(ExceptionGettingBicycles(message: data.message));
+      } else if (data is byHub.BicycleByHubRespondModel) {
+        emit(SuccessFetchAllBicycles(bicyclesHub: data));
       } else {
         emit(LoadingWhileGettingAllBicycles());
       }

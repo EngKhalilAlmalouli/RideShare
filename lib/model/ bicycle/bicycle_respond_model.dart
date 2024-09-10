@@ -1,8 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-// To parse this JSON data, do
-//
-//     final bicycleRespondModel = bicycleRespondModelFromJson(jsonString);
-
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
@@ -107,7 +102,7 @@ class Body {
   String photoPath;
   String type;
   String note;
-  List<dynamic> maintenance;
+  List<dynamic>? maintenance;
 
   Body({
     required this.id,
@@ -127,7 +122,7 @@ class Body {
       'photoPath': photoPath,
       'type': type,
       'note': note,
-      'maintenance': maintenance,
+      'maintenance': [],
     };
   }
 
@@ -140,8 +135,7 @@ class Body {
       photoPath: map['photoPath'] as String,
       type: map['type'] as String,
       note: map['note'] as String,
-      maintenance: List<dynamic>.from(
-          (map['maintenance'] as List<dynamic>).map((x) => x as int)),
+      maintenance: [],
     );
   }
 

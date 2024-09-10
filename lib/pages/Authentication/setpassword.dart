@@ -11,6 +11,7 @@ import 'package:rideshare/repo/auth/sign_up_repo.dart';
 import 'package:rideshare/service/auth/sign_up_service.dart';
 import 'package:rideshare/text_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rideshare/widgets.dart';
 
 class SetPassword extends StatefulWidget {
   final String firstName;
@@ -268,7 +269,9 @@ class _SetPasswordState extends State<SetPassword> {
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const HomeScreen()));
+                                  builder: (context) => const HomeScreen(
+                                        selectedWidget: 0,
+                                      )));
                         }
                         if (state is Error) {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -297,18 +300,6 @@ class _SetPasswordState extends State<SetPassword> {
           ),
         );
       }),
-    );
-  }
-
-  Widget togglePassword(bool value, void Function(bool) onChanged) {
-    return IconButton(
-      onPressed: () {
-        onChanged(!value);
-      },
-      icon: !value
-          ? const Icon(Icons.visibility_outlined)
-          : const Icon(Icons.visibility_off_outlined),
-      color: Colors.grey,
     );
   }
 

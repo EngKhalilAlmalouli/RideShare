@@ -16,7 +16,7 @@ class GetMyWalletInfoRepo {
 
       return GettingMyWalletInfo.fromMap(data.data);
     } on NoWallet {
-      return ExceptionMyWalletInfo(message: 'No Wallet to Show');
+      return NoWalletToShow(message: 'No Wallet to Show');
     } on DioException catch (e) {
       return ExceptionMyWalletInfo(message: e.response!.data.toString());
     }

@@ -10,6 +10,13 @@ class ExceptionMyWalletInfo extends MyWalletInfoModel {
   });
 }
 
+class NoWalletToShow extends MyWalletInfoModel {
+  final String message;
+  NoWalletToShow({
+    required this.message,
+  });
+}
+
 class GettingMyWalletInfo extends MyWalletInfoModel {
   String message;
   String status;

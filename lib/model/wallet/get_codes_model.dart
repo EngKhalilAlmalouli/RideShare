@@ -9,7 +9,7 @@ class GetValidCodes extends GetCodesModel {
   final String message;
   final String status;
   final String localDateTime;
-  final List<Code> body;
+  final List<Body> body;
   GetValidCodes({
     required this.message,
     required this.status,
@@ -21,7 +21,7 @@ class GetValidCodes extends GetCodesModel {
     String? message,
     String? status,
     String? localDateTime,
-    List<Code>? body,
+    List<Body>? body,
   }) {
     return GetValidCodes(
       message: message ?? this.message,
@@ -41,13 +41,14 @@ class GetValidCodes extends GetCodesModel {
   }
 
   factory GetValidCodes.fromMap(Map<String, dynamic> map) {
+    print('object');
     return GetValidCodes(
       message: map['message'] as String,
       status: map['status'] as String,
       localDateTime: map['localDateTime'] as String,
-      body: List<Code>.from(
-        (map['body'] as List<int>).map<Code>(
-          (x) => Code.fromMap(x as Map<String, dynamic>),
+      body: List<Body>.from(
+        (map['body'] as List).map<Body>(
+          (x) => Body.fromMap(x as Map<String, dynamic>),
         ),
       ),
     );
@@ -82,49 +83,61 @@ class GetValidCodes extends GetCodesModel {
   }
 }
 
-class Code {
-  final String code;
-  Code({
+class Body {
+  int id;
+  String code;
+  int amount;
+  Body({
+    required this.id,
     required this.code,
+    required this.amount,
   });
 
-  Code copyWith({
+  Body copyWith({
+    int? id,
     String? code,
+    int? amount,
   }) {
-    return Code(
+    return Body(
+      id: id ?? this.id,
       code: code ?? this.code,
+      amount: amount ?? this.amount,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'id': id,
       'code': code,
+      'amount': amount,
     };
   }
 
-  factory Code.fromMap(Map<String, dynamic> map) {
-    return Code(
+  factory Body.fromMap(Map<String, dynamic> map) {
+    return Body(
+      id: map['id'] as int,
       code: map['code'] as String,
+      amount: map['amount'] as int,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory Code.fromJson(String source) =>
-      Code.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory Body.fromJson(String source) =>
+      Body.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() => 'Code(code: $code)';
+  String toString() => 'Body(id: $id, code: $code, amount: $amount)';
 
   @override
-  bool operator ==(covariant Code other) {
+  bool operator ==(covariant Body other) {
     if (identical(this, other)) return true;
 
-    return other.code == code;
+    return other.id == id && other.code == code && other.amount == amount;
   }
 
   @override
-  int get hashCode => code.hashCode;
+  int get hashCode => id.hashCode ^ code.hashCode ^ amount.hashCode;
 }
 
 class GetNoCodes extends GetCodesModel {

@@ -44,7 +44,11 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: Scaffold(
-        body: auth ? const HomeScreen() : const OnBoardingPage(),
+        body: auth
+            ? const HomeScreen(
+                selectedWidget: 0,
+              )
+            : const OnBoardingPage(),
       ),
     );
   }

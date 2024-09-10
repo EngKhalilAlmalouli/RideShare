@@ -1,11 +1,16 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:rideshare/bloc/wallet/create_new_wallet_bloc.dart';
 import 'package:rideshare/bloc/wallet/get_my_wallet_info_bloc.dart';
 import 'package:rideshare/colors.dart';
 import 'package:rideshare/pages/wallet/add_amount.dart';
 import 'package:rideshare/pages/notifecation.dart';
+import 'package:rideshare/pages/wallet/create_wallet_window.dart';
+import 'package:rideshare/repo/wallet/create_new_wallet_repo.dart';
 import 'package:rideshare/repo/wallet/get_my_wallet_info_repo.dart';
+import 'package:rideshare/service/wallet/create_new_wallet_service.dart';
 import 'package:rideshare/service/wallet/get_my_wallet_info_service.dart';
 import 'package:rideshare/text_button.dart';
 
@@ -19,10 +24,18 @@ class Wallet extends StatefulWidget {
 class _WalletState extends State<Wallet> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => GetMyWalletInfoBloc(GetMyWalletInfoRepo(
-          getMyWalletInfoService: GetMyWalletInfoService(Dio())))
-        ..add(GetInfo()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => GetMyWalletInfoBloc(GetMyWalletInfoRepo(
+              getMyWalletInfoService: GetMyWalletInfoService(Dio())))
+            ..add(GetInfo()),
+        ),
+        BlocProvider(
+          create: (context) => CreateNewWalletBloc(CreateNewWalletRepo(
+              createNewWalletService: CreateNewWalletService(Dio()))),
+        ),
+      ],
       child: Stack(
         children: [
           SizedBox(
@@ -68,16 +81,7 @@ class _WalletState extends State<Wallet> {
                     height: 30,
                   ),
                   BlocConsumer<GetMyWalletInfoBloc, GetMyWalletInfoState>(
-                    listener: (context, state) {
-                      if (state is SuccessGettingMyWalletInfo) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(state.walletInfoModel.message),
-                            backgroundColor: AppColors.greenIcon,
-                          ),
-                        );
-                      }
-                    },
+                    listener: (context, state) {},
                     builder: (context, state) {
                       if (state is GetMyWalletInfoInitial) {
                         return Column(
@@ -132,7 +136,7 @@ class _WalletState extends State<Wallet> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      "${state.walletInfoModel.body.balance} S.P",
+                                      "${NumberFormat('#,###').format(state.walletInfoModel.body.balance)} S.P",
                                       style: TextStyle(
                                         color: AppColors.typeGrey,
                                         fontSize: 28,
@@ -158,6 +162,56 @@ class _WalletState extends State<Wallet> {
                                 color: AppColors.darkGrey,
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        );
+                      } else if (state is NoWalletToShowState) {
+                        return Column(
+                          children: [
+                            Container(
+                              height: 145,
+                              width: 358,
+                              decoration: BoxDecoration(
+                                color: AppColors.lightGreen,
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: AppColors.greenIcon,
+                                  width: 1,
+                                ),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Text(
+                                      state.message,
+                                      style: TextStyle(
+                                        color: AppColors.typeGrey,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 171,
+                                      height: 54,
+                                      child: Button(
+                                        text: "Create Wallet",
+                                        onPressed: () async {
+                                          bool refresh =
+                                              await creatWallet(context);
+                                          if (refresh) {
+                                            context
+                                                .read<GetMyWalletInfoBloc>()
+                                                .add(GetInfo());
+                                          }
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ],
