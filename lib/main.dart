@@ -1,71 +1,55 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:rideshare/pages/complete_your_profile.dart';
-import 'package:rideshare/pages/enable_location.dart';
-import 'package:rideshare/pages/home_screen_transport.dart';
-import 'package:rideshare/pages/onboarding1.dart';
-import 'package:rideshare/pages/onboarding2.dart';
-import 'package:rideshare/pages/onboarding3.dart';
-import 'package:rideshare/pages/setpassword.dart';
-import 'package:rideshare/pages/signup.dart';
-import 'package:rideshare/pages/welcome_screen.dart';
+import 'package:rideshare/const.dart';
+import 'package:rideshare/pages/home_screen.dart';
+import 'package:rideshare/pages/onboarding/onBoarding_page.dart';
 
 void main() {
-  runApp( MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-   MyApp({super.key});
+  const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       home: Scaffold(
-//         body: Onboarding1( ),
-
-//       ),
-//     );
-//   }
-// }
- return MaterialApp.router(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      routerConfig: _router,
+      theme: ThemeData(
+        fontFamily: 'Poppins',
+        useMaterial3: true,
+        scaffoldBackgroundColor: Colors.white,
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF08B783)),
+        primaryColor: const Color(0xFF08B783),
+        primarySwatch: const MaterialColor(
+          0xFF08B783,
+          <int, Color>{
+            50: Color(0xFFFFFFFF),
+            100: Color(0xFFFFFFFF),
+            200: Color(0xFF80E3D0),
+            300: Color(0xFF4DD9BD),
+            400: Color(0xFF26D1AF),
+            500: Color(0xFF08B783),
+            600: Color(0xFF06A377),
+            700: Color(0xFF058A69),
+            800: Color(0xFF04715C),
+            900: Color(0xFF03574A),
+          },
+        ),
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor: const Color(0xFF08B783),
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(70),
+          ),
+        ),
+      ),
+      home: Scaffold(
+        body: auth
+            ? const HomeScreen(
+                selectedWidget: 0,
+              )
+            : const OnBoardingPage(),
+      ),
     );
   }
-
-  final GoRouter _router = GoRouter(
-      //   // initialLocation:"/" ,
-      routes: [
-        GoRoute(path: "/", builder: ((context, state) => const Onboarding1())),
-        GoRoute(path: "/Onboarding1", builder: ((context, state) => const Onboarding1())),
-        GoRoute(path: "/Onboarding1", builder: ((context, state) => const Onboarding2())),
-        GoRoute(path: "/Onboarding2", builder: ((context, state) => const Onboarding2())),
-        GoRoute(path: "/Onboarding2", builder: ((context, state) => const Onboarding3())),
-        GoRoute(path: "/Onboarding3", builder: ((context, state) => const Onboarding3())),
-        GoRoute(path: "/Onboarding3", builder: ((context, state) => const EnableLocation())),
-        GoRoute(path: "/EnableLocation", builder: ((context, state) => const EnableLocation())),
-        GoRoute(path: "/EnableLocation", builder: ((context, state) =>  WelcomeScreen())),
-        GoRoute(path: "/WelcomeScreen", builder: ((context, state) =>  WelcomeScreen())),
-        GoRoute(path: "/WelcomeScreen", builder: ((context, state) =>  SignUP())),
-        GoRoute(path: "/SignUP", builder: ((context, state) =>  SignUP())),
-        GoRoute(path: "/SignUP", builder: ((context, state) =>  SetPassword())),
-        GoRoute(path: "/SetPassword", builder: ((context, state) =>  SetPassword())),
-        GoRoute(path: "/SetPassword", builder: ((context, state) =>  CompleteYourProfile())),
-        GoRoute(path: "/CompleteYourProfile", builder: ((context, state) =>  CompleteYourProfile())),
-        GoRoute(path: "/CompleteYourProfile", builder: ((context, state) =>  HomeScreenTransport())),
-        GoRoute(path: "/HomeScreenTransport", builder: ((context, state) =>  HomeScreenTransport())),
-
-
-
-
-
-
-
-        
-
-
-        
-
-      ]);
 }
