@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:rideshare/colors.dart';
 import 'package:rideshare/pages/Reservation/choose_category.dart';
 import 'package:rideshare/pages/transport/available_car_list.dart';
-import 'package:rideshare/pages/transport/select_avilable_bicycle.dart';
 
 class SelectTransport extends StatelessWidget {
   final int fromId;
