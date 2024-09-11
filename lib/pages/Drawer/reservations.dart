@@ -1,7 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
+import 'package:rideshare/bloc/reservation/bloc/update_to_finished_bloc.dart'
+    as finished;
+import 'package:rideshare/bloc/reservation/delet_reservation_bloc.dart';
 import 'package:rideshare/bloc/reservation/update_to_during_reservation_bloc.dart';
 import 'package:rideshare/bloc/reservation/get_reservations_bloc.dart';
 import 'package:rideshare/bloc/transport/get_all_bicycles_bloc.dart';
@@ -11,11 +15,15 @@ import 'package:rideshare/model/reservation/new_reservation_model.dart'
     as reservation;
 import 'package:rideshare/pages/Reservation/reservation_payment.dart';
 import 'package:rideshare/repo/bicycle/get_all_bicycle_repo.dart';
+import 'package:rideshare/repo/reservation/delet_reservation_repo.dart';
 import 'package:rideshare/repo/reservation/get_reservations_repo.dart';
 import 'package:rideshare/repo/reservation/update_to_during_reservation_repo.dart';
-import 'package:rideshare/repo/reservation/update_to_during_reservation_service.dart';
+import 'package:rideshare/repo/reservation/update_to_finished_repo.dart';
+import 'package:rideshare/service/reservation/update_to_during_reservation_service.dart';
 import 'package:rideshare/service/%20bicycle/get_all_bicycle_service.dart';
+import 'package:rideshare/service/reservation/delet_reservation_service.dart';
 import 'package:rideshare/service/reservation/get_reservations_service.dart';
+import 'package:rideshare/service/reservation/update_to_finished_service.dart';
 import 'package:rideshare/widgets.dart';
 
 class Reservations extends StatefulWidget {
@@ -61,6 +69,49 @@ class _ReservationsState extends State<Reservations> {
             ),
           ),
         ),
+        BlocProvider(
+          create: (context) => finished.UpdateToFinishedBloc(
+            UpdateToFinishedRepo(
+              updateToFinishedService: UpdateToFinishedService(
+                Dio(),
+              ),
+            ),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => DeletReservationBloc(
+            DeletReservationRepo(
+              deletReservationService: DeletReservationService(
+                Dio(),
+              ),
+            ),
+          ),
+        ),
+        BlocListener<DeletReservationBloc, DeletReservationState>(
+          listener: (context, state) {
+            if (state is SuccessDeletReservation) {
+              InfoMessage(
+                context,
+                state.deletedModel.status,
+                [state.deletedModel.message],
+              );
+            } else if (state is BadDeletedResponse) {
+              errorMessage(
+                context,
+                state.badDeletModel.status,
+                [state.badDeletModel.message],
+              );
+              context.read<GetReservationsBloc>().add(GetReservation());
+            } else if (state is ExceptionDeletingResponse) {
+              errorMessage(
+                context,
+                "Exception",
+                [state.exceptionDeletModel.message],
+              );
+            }
+            context.read<GetReservationsBloc>().add(GetReservation());
+          },
+        ),
         BlocListener<UpdateToDuringReservationBloc,
             UpdateToDuringReservationState>(
           listener: (context, state) {
@@ -75,6 +126,34 @@ class _ReservationsState extends State<Reservations> {
               );
               context.read<GetReservationsBloc>().add(GetReservation());
             } else if (state is ExceptionUpdation) {
+              if (state.exceptionRequest.badRequest != null) {
+                return errorMessage(
+                    context,
+                    state.exceptionRequest.badRequest!.status,
+                    [state.exceptionRequest.badRequest!.message]);
+              } else {
+                return errorMessage(
+                    context,
+                    state.exceptionRequest.conflictUpdate!.status,
+                    [state.exceptionRequest.conflictUpdate!.message]);
+              }
+            }
+          },
+        ),
+        BlocListener<finished.UpdateToFinishedBloc,
+            finished.UpdateToFinishedState>(
+          listener: (context, state) {
+            if (state is finished.SuccessUpdating) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    state.updatedToFinished.message,
+                  ),
+                  backgroundColor: AppColors.greenIcon,
+                ),
+              );
+              context.read<GetReservationsBloc>().add(GetReservation());
+            } else if (state is finished.ExceptionUpdation) {
               if (state.exceptionRequest.badRequest != null) {
                 return errorMessage(
                     context,
@@ -241,7 +320,7 @@ class _ReservationsState extends State<Reservations> {
                                     ? "Finished"
                                     : "During Reservation",
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
@@ -394,157 +473,218 @@ class _ReservationsState extends State<Reservations> {
                                             context,
                                             (bool run) {
                                               if (run) {
-                                                context.read<
-                                                    UpdateToDuringReservationBloc>()
-                                                  ..add(
-                                                    UpdateDuring(
-                                                      id: state
-                                                          .successGettingReservations
-                                                          .body[index]
-                                                          .id,
-                                                    ),
-                                                  );
+                                                context
+                                                    .read<
+                                                        UpdateToDuringReservationBloc>()
+                                                    .add(
+                                                      UpdateDuring(
+                                                        id: state
+                                                            .successGettingReservations
+                                                            .body[index]
+                                                            .id,
+                                                      ),
+                                                    );
                                               }
                                             },
                                             "You are starting this reservation",
                                           );
+                                        } else if (state
+                                                .successGettingReservations
+                                                .body[index]
+                                                .reservationStatus ==
+                                            "DURING_RESERVATION") {
+                                          functionDialog(
+                                            context,
+                                            (bool run) {
+                                              if (run) {
+                                                context
+                                                    .read<
+                                                        finished
+                                                        .UpdateToFinishedBloc>()
+                                                    .add(
+                                                      finished.UpdateFinished(
+                                                        id: state
+                                                            .successGettingReservations
+                                                            .body[index]
+                                                            .id,
+                                                      ),
+                                                    );
+                                              }
+                                            },
+                                            "You are ending this reservation",
+                                          );
                                         }
                                       },
-                                      child: Container(
-                                        width: 362,
-                                        height: selectedIndex == 2 ? 104 : 64,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          border: Border.all(
-                                            color: selectedIndex == 0
-                                                ? Colors.amber
-                                                : AppColors.greenIcon,
-                                          ),
-                                        ),
-                                        alignment: Alignment.center,
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                                      child: Slidable(
+                                        startActionPane: ActionPane(
+                                            motion: StretchMotion(),
                                             children: [
-                                              Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      Text(
-                                                        state
-                                                            .successGettingReservations
-                                                            .body[index]
-                                                            .bicycle,
-                                                        style: TextStyle(
-                                                            fontSize: 14,
-                                                            color: AppColors
-                                                                .darkGrey,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                      ),
-                                                      Text(
-                                                        "  ( from: ",
-                                                        style: TextStyle(
-                                                          fontSize: 10,
-                                                          color: AppColors
-                                                              .greenIcon,
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        state
-                                                            .successGettingReservations
-                                                            .body[index]
-                                                            .from,
-                                                        style: TextStyle(
-                                                          fontSize: 10,
-                                                          color: AppColors
-                                                              .greenIcon,
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        " to: ",
-                                                        style: TextStyle(
-                                                          fontSize: 10,
-                                                          color: AppColors
-                                                              .greenIcon,
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        "${state.successGettingReservations.body[index].to} )",
-                                                        style: TextStyle(
-                                                          fontSize: 10,
-                                                          color: AppColors
-                                                              .greenIcon,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Text(
-                                                    formattedDate,
-                                                    style: TextStyle(
-                                                      fontSize: 14,
-                                                      color: AppColors.grey,
-                                                    ),
-                                                  ),
-                                                  state.successGettingReservations
-                                                              .body[index].endTime !=
-                                                          null
-                                                      ? Text(
-                                                          formattedEndingDate,
+                                              SlidableAction(
+                                                  backgroundColor:
+                                                      const Color.fromRGBO(
+                                                          211, 47, 47, 1),
+                                                  label: "Delete",
+                                                  icon: Icons.delete,
+                                                  onPressed: (context2) {
+                                                    DeletingDialog(
+                                                      context,
+                                                      (bool run) {
+                                                        if (run) {
+                                                          context
+                                                              .read<
+                                                                  DeletReservationBloc>()
+                                                              .add(
+                                                                DeletReservation(
+                                                                  id: state
+                                                                      .successGettingReservations
+                                                                      .body[
+                                                                          index]
+                                                                      .id,
+                                                                ),
+                                                              );
+                                                        }
+                                                      },
+                                                      "You are going to delet this reservation",
+                                                    );
+                                                  })
+                                            ]),
+                                        child: Container(
+                                          width: 362,
+                                          height: selectedIndex == 2 ? 104 : 64,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            border: Border.all(
+                                              color: selectedIndex == 0
+                                                  ? Colors.amber
+                                                  : AppColors.greenIcon,
+                                            ),
+                                          ),
+                                          alignment: Alignment.center,
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        Text(
+                                                          state
+                                                              .successGettingReservations
+                                                              .body[index]
+                                                              .bicycle,
                                                           style: TextStyle(
-                                                            fontSize: 14,
+                                                              fontSize: 14,
+                                                              color: AppColors
+                                                                  .darkGrey,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                        ),
+                                                        Text(
+                                                          "  ( from: ",
+                                                          style: TextStyle(
+                                                            fontSize: 10,
                                                             color: AppColors
                                                                 .greenIcon,
                                                           ),
-                                                        )
-                                                      : const SizedBox(),
-                                                  selectedIndex == 2
-                                                      ? Container(
-                                                          height: 20,
-                                                          width: 50,
-                                                          alignment:
-                                                              Alignment.center,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color:
-                                                                AppColors.green,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        4),
+                                                        ),
+                                                        Text(
+                                                          state
+                                                              .successGettingReservations
+                                                              .body[index]
+                                                              .from,
+                                                          style: TextStyle(
+                                                            fontSize: 10,
+                                                            color: AppColors
+                                                                .greenIcon,
                                                           ),
-                                                          child: const Text(
-                                                            "Finished",
+                                                        ),
+                                                        Text(
+                                                          " to: ",
+                                                          style: TextStyle(
+                                                            fontSize: 10,
+                                                            color: AppColors
+                                                                .greenIcon,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          "${state.successGettingReservations.body[index].to} )",
+                                                          style: TextStyle(
+                                                            fontSize: 10,
+                                                            color: AppColors
+                                                                .greenIcon,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Text(
+                                                      formattedDate,
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: AppColors.grey,
+                                                      ),
+                                                    ),
+                                                    state.successGettingReservations
+                                                                .body[index].endTime !=
+                                                            null
+                                                        ? Text(
+                                                            formattedEndingDate,
                                                             style: TextStyle(
-                                                                fontSize: 10,
-                                                                color: Colors
-                                                                    .white,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
-                                                          ),
-                                                        )
-                                                      : const SizedBox(),
-                                                ],
-                                              ),
-                                              Text(
-                                                overflow: TextOverflow.fade,
-                                                "${(state.successGettingReservations.body[index].price == state.successGettingReservations.body[index].price.toInt()) ? state.successGettingReservations.body[index].price.toInt() : state.successGettingReservations.body[index].price.toStringAsFixed(2)} S.P",
-                                                style: const TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              )
-                                            ],
+                                                              fontSize: 14,
+                                                              color: AppColors
+                                                                  .greenIcon,
+                                                            ),
+                                                          )
+                                                        : const SizedBox(),
+                                                    selectedIndex == 2
+                                                        ? Container(
+                                                            height: 20,
+                                                            width: 50,
+                                                            alignment: Alignment
+                                                                .center,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: AppColors
+                                                                  .green,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          4),
+                                                            ),
+                                                            child: const Text(
+                                                              "Finished",
+                                                              style: TextStyle(
+                                                                  fontSize: 10,
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                                                            ),
+                                                          )
+                                                        : const SizedBox(),
+                                                  ],
+                                                ),
+                                                Text(
+                                                  overflow: TextOverflow.fade,
+                                                  "${(state.successGettingReservations.body[index].price == state.successGettingReservations.body[index].price.toInt()) ? state.successGettingReservations.body[index].price.toInt() : state.successGettingReservations.body[index].price.toStringAsFixed(2)} S.P",
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                )
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),

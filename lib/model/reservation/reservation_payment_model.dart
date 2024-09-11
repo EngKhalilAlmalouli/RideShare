@@ -99,7 +99,7 @@ class Body {
   String bicycle;
   String from;
   String to;
-  int duration;
+  double duration;
   DateTime startTime;
   dynamic endTime;
   String reservationStatus;
