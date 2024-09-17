@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:rideshare/const.dart';
+import 'package:rideshare/service/shared_prefrences/shared_pref.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Service {
   final Dio dio;
@@ -9,7 +10,8 @@ class Service {
   Options options = Options(
     headers: {
       'Accept': '*/*',
-      'Authorization': 'Bearer $token',
+      'Authorization':
+          'Bearer ${storage.get<SharedPreferences>().getString("token")}',
     },
   );
 }

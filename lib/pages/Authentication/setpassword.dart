@@ -1,6 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:rideshare/bloc/authentication/sign_up_bloc.dart';
@@ -42,7 +39,7 @@ class _SetPasswordState extends State<SetPassword> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          SignUpBloc(SignUpRepo(signUpService: SignUpService(Dio()))),
+          SignUpBloc(SignUpRepo(signUpService: SignUpService())),
       child: Builder(builder: (context) {
         return Scaffold(
           body: Stack(

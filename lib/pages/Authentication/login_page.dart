@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rideshare/bloc/authentication/log_in_bloc.dart';
@@ -24,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => LogInBloc(LoginService(Dio())),
+      create: (context) => LogInBloc(LoginService()),
       child: Builder(builder: (context) {
         return Scaffold(
           appBar: AppBar(
@@ -81,6 +80,12 @@ class _LoginPageState extends State<LoginPage> {
                           builder: (context) => HomeScreen(
                                 selectedWidget: 0,
                               )));
+                } else if (state is LoginException) {
+                  return errorMessage(
+                    context,
+                    "Error",
+                    [state.exceptionMessage],
+                  );
                 }
               }, builder: (context, state) {
                 if (state is LoginSuccess) {
@@ -140,7 +145,6 @@ class _LoginPageState extends State<LoginPage> {
                             },
                           ),
                         ),
-                        Text(state.exceptionMessage),
                       ],
                     ),
                   );

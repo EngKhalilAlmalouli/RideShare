@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rideshare/colors.dart';
+import 'package:rideshare/pages/Authentication/login_page.dart';
 import 'package:rideshare/pages/Authentication/setpassword.dart';
 import 'package:rideshare/text_field.dart';
 import 'package:rideshare/text_button.dart';
@@ -181,7 +182,7 @@ class _SignUpPageState extends State<SignUpPage> {
               const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
+                children: [
                   Container(
                     width: 156,
                     height: 1,
@@ -216,7 +217,14 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LoginPage(),
+                        ),
+                      );
+                    },
                     child: const Text(
                       'Sign in',
                       style: TextStyle(

@@ -1,34 +1,47 @@
 import 'package:dio/dio.dart';
-import 'package:rideshare/const.dart';
 import 'package:rideshare/model/authentication/Login_model.dart';
 import 'package:rideshare/model/authentication/login_respond.dart';
-import 'package:rideshare/service/service.dart';
+import 'package:rideshare/service/shared_prefrences/shared_pref.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginService extends Service {
-  LoginService(super.dio);
+class LoginService {
   Future<LoginRespond> loginService(LoginModel user) async {
     try {
+      Dio dio = Dio();
+      String baseUrl = "https://rideshare.devscape.online";
       Options options = Options(
         headers: {
           'Accept': '*/*',
           'Content-Type': 'application/json',
         },
       );
-      response = await dio.post(
+      Response response = await dio.post(
         "$baseUrl/api/v1/auth/authenticate",
         data: user.toMap(),
         options: options,
       );
 
       if (response.statusCode == 200) {
-        token = response.data['body']['token'];
-        print(response.data['body']['token']);
+        LoginToken info = LoginToken.fromMap(response.data);
+
+        storage.get<SharedPreferences>().setBool("auth", true);
+        storage.get<SharedPreferences>().setInt("id", info.body.id);
+        storage.get<SharedPreferences>().setString("phone", info.body.phone);
+        storage.get<SharedPreferences>().setString("token", info.body.token);
+        storage
+            .get<SharedPreferences>()
+            .setString("firstName", info.body.firstName);
+
         return LoginToken.fromMap(response.data);
       } else {
         return LoginErrorRespond(message: 'lol');
       }
     } on DioException catch (e) {
-      return LoginErrorRespond(message: e.message.toString());
+      if (e.response!.data["status"] == "BAD_REQUEST") {
+        return LoginErrorRespond(message: e.response!.data["message"]);
+      } else {
+        return LoginErrorRespond(message: e.message.toString());
+      }
     }
   }
 }

@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:rideshare/colors.dart';
 import 'package:rideshare/pages/home_screen.dart';
+import 'package:rideshare/service/shared_prefrences/shared_pref.dart';
 import 'package:rideshare/text_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ThankYou extends StatefulWidget {
-  final String name;
-  const ThankYou({super.key, required this.name});
+  const ThankYou({super.key});
 
   @override
   State<ThankYou> createState() => _ThankYouState();
@@ -51,7 +52,7 @@ class _ThankYouState extends State<ThankYou> {
                     ),
                   ),
                   Text(
-                    "Mr. ${widget.name}",
+                    "Mr. ${storage.get<SharedPreferences>().getString("firstName")}",
                     style: TextStyle(
                       fontSize: 12,
                       color: AppColors.darkGrey,
@@ -69,15 +70,16 @@ class _ThankYouState extends State<ThankYou> {
                       text: "Confirm Ride",
                       onPressed: () {
                         Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const HomeScreen(selectedWidget: 0)));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const HomeScreen(
+                              selectedWidget: 0,
+                            ),
+                          ),
+                        );
                       }),
                 ),
-                SizedBox(
-                  height: 34,
-                ),
+                const SizedBox(height: 34),
               ],
             ),
           ],

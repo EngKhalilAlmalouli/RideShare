@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:rideshare/const.dart';
 import 'package:rideshare/service/service.dart';
+import 'package:rideshare/service/shared_prefrences/shared_pref.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class GetReservationsService extends Service {
   GetReservationsService(super.dio);
@@ -8,7 +9,7 @@ class GetReservationsService extends Service {
   Future<Response> getReservationsService() async {
     try {
       response = await dio.get(
-          "$baseUrl/api/v1/reservation/by-client-id/$myUserId",
+          "$baseUrl/api/v1/reservation/by-client-id/${storage.get<SharedPreferences>().getInt("id")}",
           options: options);
       return response;
     } on DioException {

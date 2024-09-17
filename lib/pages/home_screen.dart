@@ -7,6 +7,8 @@ import 'package:rideshare/pages/transport/home_screen_transport.dart';
 import 'package:rideshare/pages/offer/offer.dart';
 import 'package:rideshare/pages/profile.dart';
 import 'package:rideshare/pages/wallet/wallet.dart';
+import 'package:rideshare/service/shared_prefrences/shared_pref.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   final int selectedWidget;
@@ -24,6 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     _selectedIndex = widget.selectedWidget;
     if (_selectedIndex == 0) {
+      print(storage.get<SharedPreferences>().getString("token"));
       _selectedWidget = const HomeScreenTransport();
     } else if (_selectedIndex == 1) {
       _selectedWidget = const Favourite();

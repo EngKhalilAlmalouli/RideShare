@@ -77,27 +77,57 @@ class LoginToken extends LoginRespond {
 }
 
 class Body {
+  final int id;
+  final String firstName;
+  final String lastName;
+  final String phone;
+  final String username;
   final String token;
   Body({
+    required this.id,
+    required this.firstName,
+    required this.lastName,
+    required this.phone,
+    required this.username,
     required this.token,
   });
 
   Body copyWith({
+    int? id,
+    String? firstName,
+    String? lastName,
+    String? phone,
+    String? username,
     String? token,
   }) {
     return Body(
+      id: id ?? this.id,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      phone: phone ?? this.phone,
+      username: username ?? this.username,
       token: token ?? this.token,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'id': id,
+      'firstName': firstName,
+      'lastName': lastName,
+      'phone': phone,
+      '_username': username,
       'token': token,
     };
   }
 
   factory Body.fromMap(Map<String, dynamic> map) {
     return Body(
+      id: map['id'] as int,
+      firstName: map['firstName'] as String,
+      lastName: map['lastName'] as String,
+      phone: map['phone'] as String,
+      username: map['_username'] as String,
       token: map['token'] as String,
     );
   }
@@ -108,17 +138,31 @@ class Body {
       Body.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() => 'Body(token: $token)';
+  String toString() {
+    return 'Body(id: $id, firstName: $firstName, lastName: $lastName, phone: $phone, _username: $username, token: $token)';
+  }
 
   @override
   bool operator ==(covariant Body other) {
     if (identical(this, other)) return true;
 
-    return other.token == token;
+    return other.id == id &&
+        other.firstName == firstName &&
+        other.lastName == lastName &&
+        other.phone == phone &&
+        other.username == username &&
+        other.token == token;
   }
 
   @override
-  int get hashCode => token.hashCode;
+  int get hashCode {
+    return id.hashCode ^
+        firstName.hashCode ^
+        lastName.hashCode ^
+        phone.hashCode ^
+        username.hashCode ^
+        token.hashCode;
+  }
 }
 
 class LoginUnsuccessful extends LoginRespond {

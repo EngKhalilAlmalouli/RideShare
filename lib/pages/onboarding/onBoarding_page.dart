@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:rideshare/pages/onboarding/map.dart';
+import 'package:rideshare/service/shared_prefrences/shared_pref.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OnBoardingPage extends StatefulWidget {
   const OnBoardingPage({super.key});
@@ -40,6 +42,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           FloatingActionButton(
               onPressed: () {
                 if (go) {
+                  storage.get<SharedPreferences>().setBool("firstTime", false);
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => const MapPage()));
                   // context.go('/MapPage');

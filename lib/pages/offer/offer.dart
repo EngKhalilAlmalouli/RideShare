@@ -81,7 +81,7 @@ class _OfferState extends State<Offer> {
                               height: 93,
                               width: 363,
                               decoration: BoxDecoration(
-                                color: AppColors.lightGreen,
+                                color: Colors.white,
                                 borderRadius: BorderRadius.circular(8),
                                 border: Border.all(
                                   color: AppColors.greenIcon,
@@ -118,8 +118,8 @@ class _OfferState extends State<Offer> {
                                                 const SizedBox(width: 10),
                                                 Text(
                                                   "( ${state.getAllOffers.body[index].model_price.price.toString()} S.P )",
-                                                  style: TextStyle(
-                                                      color: AppColors.green,
+                                                  style: const TextStyle(
+                                                      color: Colors.amber,
                                                       fontSize: 12,
                                                       fontWeight:
                                                           FontWeight.w500),
@@ -176,6 +176,8 @@ class _OfferState extends State<Offer> {
                                             errorBuilder: (BuildContext context,
                                                 Object exception,
                                                 StackTrace? stackTrace) {
+                                              print(
+                                                  "https://${state.getAllOffers.body[index].photoPath}  has error");
                                               return const Icon(Icons
                                                   .image_not_supported_rounded);
                                             },
