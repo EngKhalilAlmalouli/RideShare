@@ -1,9 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:rideshare/main.dart';
 import 'package:rideshare/pages/Authentication/welcome_screen.dart';
 import 'package:rideshare/text_button.dart';
 
 void showMyDialog(BuildContext context) {
+  Future<void> _getPermission(bool set) async {
+    if (set) {
+      permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          return Future.error('Location permissions are denied');
+        }
+      }
+
+      if (permission == LocationPermission.deniedForever) {
+        return Future.error(
+            'Location permissions are permanently denied, we cannot request permissions.');
+      }
+    } else {
+      permission = permission = LocationPermission.denied;
+    }
+  }
+
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -45,7 +66,15 @@ void showMyDialog(BuildContext context) {
               child: Button(
                 text: 'Use my location',
                 onPressed: () {
+                  _getPermission(true);
+                  print(permission);
                   Navigator.of(context).pop();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AuthPage(),
+                    ),
+                  );
                 },
               ),
             ),
@@ -58,11 +87,15 @@ void showMyDialog(BuildContext context) {
               child: WhiteButton(
                 text: 'Skip for now',
                 onPressed: () {
+                  _getPermission(false);
+                  print(permission);
                   Navigator.of(context).pop();
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const AuthPage()));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AuthPage(),
+                    ),
+                  );
                 },
               ),
             ),

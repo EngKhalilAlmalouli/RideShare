@@ -2,7 +2,7 @@
 import 'package:dio/dio.dart';
 import 'package:rideshare/model/error/exception.dart';
 import 'package:rideshare/model/reservation/update_to_during_reservation_model.dart';
-import 'package:rideshare/repo/reservation/update_to_during_reservation_service.dart';
+import 'package:rideshare/service/reservation/update_to_during_reservation_service.dart';
 
 class UpdateToDuringReservationRepo {
   final UpdateToDuringReservationService updateToDuringReservationService;

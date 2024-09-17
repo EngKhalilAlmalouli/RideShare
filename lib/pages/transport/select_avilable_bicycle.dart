@@ -2,12 +2,16 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:rideshare/bloc/favourite/add_favourite_bloc.dart';
 import 'package:rideshare/bloc/transport/get_all_bicycles_bloc.dart';
 import 'package:rideshare/colors.dart';
 import 'package:rideshare/pages/Reservation/request_reservation.dart';
 import 'package:rideshare/repo/bicycle/get_all_bicycle_repo.dart';
+import 'package:rideshare/repo/favourite/add_favourite_repo.dart';
 import 'package:rideshare/service/%20bicycle/get_all_bicycle_service.dart';
+import 'package:rideshare/service/favourite/add_favourite_service.dart';
 import 'package:rideshare/text_button.dart';
+import 'package:rideshare/widgets.dart';
 
 class SelectAvilableBicyclePage extends StatefulWidget {
   final int fromId;
@@ -68,12 +72,58 @@ class _SelectAvilableBicyclePageState extends State<SelectAvilableBicyclePage> {
   late String startingDateTime;
 
   String selectTimeTitle = 'Select Time';
-
+//
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => GetAllBicyclesBloc(GetAllBicyclesRepo(
-          getAllBicycleService: GetAllBicycleService(Dio()))),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => GetAllBicyclesBloc(
+            GetAllBicyclesRepo(
+              getAllBicycleService: GetAllBicycleService(
+                Dio(),
+              ),
+            ),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => AddFavouriteBloc(
+            AddFavouriteRepo(
+              addFavouriteService: AddFavouriteService(
+                Dio(),
+              ),
+            ),
+          ),
+        ),
+        BlocListener<AddFavouriteBloc, AddFavouriteState>(
+            listener: (context, state) {
+          if (state is AddedToFavourite) {
+            InfoMessage(
+              context,
+              state.favouriteRespond.status,
+              [state.favouriteRespond.message],
+            );
+            context.read<GetAllBicyclesBloc>().add(
+                  GetAllBicyclesByHub(
+                    id: widget.fromId,
+                    bicycleCategory: widget.roadBikes,
+                  ),
+                );
+          } else if (state is BadResponse) {
+            errorMessage(
+              context,
+              state.badFavoriteRespond.status,
+              [state.badFavoriteRespond.message],
+            );
+          } else if (state is ExceptionRespond) {
+            errorMessage(
+              context,
+              "Exception",
+              [state.exceptionFavoriteRespond.message],
+            );
+          }
+        })
+      ],
       child: Builder(builder: (context) {
         context.read<GetAllBicyclesBloc>().add(GetAllBicyclesByHub(
             id: widget.fromId, bicycleCategory: widget.roadBikes));
@@ -295,34 +345,91 @@ class _SelectAvilableBicyclePageState extends State<SelectAvilableBicyclePage> {
                                             const SizedBox(
                                               height: 24,
                                             ),
-                                            SizedBox(
-                                              width: 340,
-                                              height: 54,
-                                              child: BorderButton(
-                                                text: 'Book the bike',
-                                                onPressed: () {
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 274,
+                                                  height: 54,
+                                                  child: BorderButton(
+                                                    text: 'Book the bike',
+                                                    onPressed: () {
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
                                                           builder: (context) =>
                                                               RequestReservation(
-                                                                currentPosition:
-                                                                    _currentPosition!,
-                                                                bicycleHub: state
+                                                            currentPosition:
+                                                                _currentPosition!,
+                                                            bicycleHub: state
                                                                     .bicyclesHub!
                                                                     .body
-                                                                    .bicycleList[index],
-                                                                fromId: widget
-                                                                    .fromId,
-                                                                toId:
-                                                                    widget.toId,
-                                                                fromName: widget
-                                                                    .fromName,
-                                                                toName: widget
-                                                                    .toName,
-                                                              )));
-                                                },
-                                              ),
+                                                                    .bicycleList[
+                                                                index],
+                                                            fromId:
+                                                                widget.fromId,
+                                                            toId: widget.toId,
+                                                            fromName:
+                                                                widget.fromName,
+                                                            toName:
+                                                                widget.toName,
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                  ),
+                                                ),
+                                                Container(
+                                                  height: 54,
+                                                  width: 54,
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                        54,
+                                                      ),
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: Colors.black
+                                                              .withOpacity(0.2),
+                                                          spreadRadius: 0.3,
+                                                          blurRadius: 1,
+                                                          offset: Offset(1, 1),
+                                                        )
+                                                      ]),
+                                                  child: IconButton(
+                                                    onPressed: () {
+                                                      context
+                                                          .read<
+                                                              AddFavouriteBloc>()
+                                                          .add(
+                                                            AddFavourite(
+                                                              id: state
+                                                                  .bicyclesHub!
+                                                                  .body
+                                                                  .bicycleList[
+                                                                      index]
+                                                                  .id,
+                                                            ),
+                                                          );
+                                                    },
+                                                    icon: Icon(
+                                                      state
+                                                              .bicyclesHub!
+                                                              .body
+                                                              .bicycleList[
+                                                                  index]
+                                                              .isFavourite
+                                                          ? Icons.favorite
+                                                          : Icons
+                                                              .favorite_outline,
+                                                      color: AppColors.green,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         ),

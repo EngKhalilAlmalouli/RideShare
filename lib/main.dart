@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:rideshare/const.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:rideshare/pages/Authentication/welcome_screen.dart';
 import 'package:rideshare/pages/home_screen.dart';
 import 'package:rideshare/pages/onboarding/onBoarding_page.dart';
+import 'package:rideshare/service/shared_prefrences/shared_pref.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+LocationPermission? permission;
+void main() async {
+  await setUp();
   runApp(const MyApp());
 }
 
@@ -43,13 +48,17 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: Scaffold(
-        body: auth
-            ? const HomeScreen(
-                selectedWidget: 0,
-              )
-            : const OnBoardingPage(),
-      ),
+
+      // home: Scaffold(
+      //   body: OnBoardingPage(),
+      // ),
+      home: storage.get<SharedPreferences>().getBool("firstTime") ?? true
+          ? const OnBoardingPage()
+          : storage.get<SharedPreferences>().getBool("auth") ?? false == true
+              ? const HomeScreen(
+                  selectedWidget: 0,
+                )
+              : const AuthPage(),
     );
   }
 }

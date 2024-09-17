@@ -1,15 +1,33 @@
 import 'package:dio/dio.dart';
+import 'package:rideshare/model/authentication/login_respond.dart';
 import 'package:rideshare/model/error/exception.dart';
 import 'package:rideshare/model/authentication/sign_up_model.dart';
-import 'package:rideshare/service/service.dart';
+import 'package:rideshare/service/shared_prefrences/shared_pref.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class SignUpService extends Service {
-  SignUpService(super.dio);
+class SignUpService {
   Future<Response> signUpService(SignUpModel user) async {
     try {
+      Dio dio = Dio();
+      String baseUrl = "https://rideshare.devscape.online";
       Map<String, dynamic> userMap = user.toMap();
+      Options options = Options(
+        headers: {
+          'Accept': '*/*',
+          'Content-Type': 'application/json',
+        },
+      );
+      Response response = await dio.post('$baseUrl/api/v1/auth/register',
+          options: options, data: userMap);
+      LoginToken info = LoginToken.fromMap(response.data);
 
-      response = await dio.post('$baseUrl/api/v1/auth/register', data: userMap);
+      storage.get<SharedPreferences>().setBool("auth", true);
+      storage.get<SharedPreferences>().setInt("id", info.body.id);
+      storage.get<SharedPreferences>().setString("phone", info.body.phone);
+      storage.get<SharedPreferences>().setString("token", info.body.token);
+      storage
+          .get<SharedPreferences>()
+          .setString("firstName", info.body.firstName);
 
       return response;
     } on DioException catch (e) {
@@ -20,7 +38,7 @@ class SignUpService extends Service {
             List<String>.from(e.response!.data['message'][0].split(','));
         throw BadRequestSignUp(messages: messages);
       } else {
-        throw e;
+        rethrow;
       }
     }
   }

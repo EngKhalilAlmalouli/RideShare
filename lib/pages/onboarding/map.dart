@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:rideshare/pages/Authentication/message_maps_req.dart';
@@ -15,6 +14,7 @@ class _MapPageState extends State<MapPage> {
   @override
   void initState() {
     super.initState();
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       showMyDialog(context);
     });

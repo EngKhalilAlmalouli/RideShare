@@ -288,11 +288,7 @@ class _ReservationPaymentState extends State<ReservationPayment> {
                       if (state is SuccessReservationPayment) {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => ThankYou(
-                                    name: state
-                                        .reservationPaymentSuccess.body.client,
-                                  )),
+                          MaterialPageRoute(builder: (context) => ThankYou()),
                         );
                       } else if (state is FaildReservationPayment) {
                         return errorMessage(

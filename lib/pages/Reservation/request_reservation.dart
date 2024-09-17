@@ -68,6 +68,8 @@ class _RequestReservationState extends State<RequestReservation> {
         context: context,
         initialTime: TimeOfDay.now(),
       );
+      print("selectedTime");
+      print(selectedTime);
 
       if (selectedTime != null) {
         setState(() {
@@ -78,6 +80,11 @@ class _RequestReservationState extends State<RequestReservation> {
             selectedTime!.hour,
             selectedTime!.minute,
           );
+          print("selectedTime!.hour");
+          print(selectedTime!.hour);
+
+          print("selectedDateTime");
+          print(selectedDateTime);
 
           final DateTime currentDateTime = DateTime.now();
 
@@ -85,10 +92,10 @@ class _RequestReservationState extends State<RequestReservation> {
               DateFormat("yyyy-MM-dd HH:mm:00.000").format(DateTime.now())) {
             final String formattedDateTime =
                 DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-                    .format(selectedDateTime.toUtc());
+                    .format(selectedDateTime);
             startingDateTime = formattedDateTime;
             startingTimeController.text =
-                DateFormat("dd/MM/yyyy HH:mm").format(selectedDateTime.toUtc());
+                DateFormat("dd/MM/yyyy HH:mm").format(selectedDateTime);
             return;
           }
           if (selectedDateTime.isBefore(currentDateTime)) {
@@ -97,10 +104,10 @@ class _RequestReservationState extends State<RequestReservation> {
           } else {
             final String formattedDateTime =
                 DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-                    .format(selectedDateTime.toUtc());
+                    .format(selectedDateTime);
             startingDateTime = formattedDateTime;
             startingTimeController.text =
-                DateFormat("dd/MM/yyyy HH:mm").format(selectedDateTime.toUtc());
+                DateFormat("dd/MM/yyyy HH:mm").format(selectedDateTime);
           }
         });
       }
@@ -124,7 +131,7 @@ class _RequestReservationState extends State<RequestReservation> {
           EndingTime!.minute,
         );
         endingTimeController.text =
-            DateFormat("dd/MM/yyyy HH:mm").format(endingDateTime.toUtc());
+            DateFormat("dd/MM/yyyy HH:mm").format(endingDateTime);
       });
     }
   }

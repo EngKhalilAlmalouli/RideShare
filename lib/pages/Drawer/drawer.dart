@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:rideshare/colors.dart';
-import 'package:rideshare/const.dart';
 import 'package:rideshare/pages/Authentication/welcome_screen.dart';
 import 'package:rideshare/pages/Drawer/Settings/settings.dart';
 import 'package:rideshare/pages/Drawer/reservations.dart';
+import 'package:rideshare/service/shared_prefrences/shared_pref.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyDrawer extends StatelessWidget {
   @override
@@ -28,7 +29,8 @@ class MyDrawer extends StatelessWidget {
               height: 18,
             ),
             Text(
-              userName,
+              storage.get<SharedPreferences>().getString("firstName") ??
+                  "First Name",
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w500,
@@ -36,7 +38,8 @@ class MyDrawer extends StatelessWidget {
               ),
             ),
             Text(
-              userPhoneNumber,
+              storage.get<SharedPreferences>().getString("phone") ??
+                  "Phone number",
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
@@ -90,6 +93,11 @@ class MyDrawer extends StatelessWidget {
             const Divider(),
             TextButton.icon(
                 onPressed: () {
+                  storage.get<SharedPreferences>().setBool("auth", false);
+                  storage.get<SharedPreferences>().setInt("id", -1);
+                  storage.get<SharedPreferences>().setString("phone", "");
+                  storage.get<SharedPreferences>().setString("token", "");
+                  storage.get<SharedPreferences>().setString("firstName", "");
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
